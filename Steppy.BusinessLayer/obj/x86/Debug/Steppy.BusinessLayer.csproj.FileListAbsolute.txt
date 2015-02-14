@@ -1,0 +1,7 @@
+C:\Users\Filip\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\x86\Debug\Steppy.BusinessLayer.dll
+C:\Users\Filip\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\x86\Debug\Steppy.BusinessLayer.pdb
+C:\Users\Filip\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\x86\Debug\Lumia.Sense.winmd
+C:\Users\Filip\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\x86\Debug\Lumia.Sense.dll
+C:\Users\Filip\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\x86\Debug\Lumia.Sense.xml
+C:\Users\Filip\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\obj\x86\Debug\Steppy.BusinessLayer.dll
+C:\Users\Filip\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\obj\x86\Debug\Steppy.BusinessLayer.pdb

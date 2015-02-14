@@ -1,0 +1,241 @@
+﻿<UserControl x:Class="Steppy.Controls.TodayStepsData"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             FontFamily="{StaticResource PhoneFontFamilyNormal}"
+             FontSize="{StaticResource PhoneFontSizeNormal}"
+             Foreground="{StaticResource PhoneForegroundBrush}"
+             d:DesignHeight="580"
+             d:DesignWidth="480">
+
+    <Grid x:Name="LayoutRoot"
+          Background="{StaticResource DeusBlack}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Rectangle Width="480"
+                   Fill="#302D2D"
+                   VerticalAlignment="Top"
+                   Height="10" />
+
+        <Rectangle VerticalAlignment="Top"
+                   Fill="{StaticResource DeusGold}"
+                   Height="10"
+                   HorizontalAlignment="Left"
+                   Width="250" />
+
+        <TextBlock VerticalAlignment="Top"
+                   Margin="5 10 0 0"
+                   HorizontalAlignment="Left"
+                   Text="DAILY GOAL">
+            <TextBlock.Projection>
+                <PlaneProjection RotationX="30" />
+            </TextBlock.Projection>
+
+        </TextBlock>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock 
+                       Margin="0 30 5 -5"
+                       HorizontalAlignment="Right"
+                       RenderTransformOrigin="0.5,0.5">
+                <TextBlock.Projection>
+                    <PlaneProjection RotationX="-10" />
+                </TextBlock.Projection>
+            <Run Text="{Binding TodaySteps, FallbackValue=31, TargetNullValue=0}"
+                 FontSize="{StaticResource BigFont}"
+                 FontWeight="Light"
+                 Foreground="{StaticResource DeusGold}" />
+            <!--<Run Text=" / 1000"
+                 FontSize="28"
+                 Foreground="Gray" />-->
+            </TextBlock>
+
+            <Rectangle VerticalAlignment="Bottom"
+                       Height="3"
+                       HorizontalAlignment="Left"
+                       Fill="{StaticResource DeusGold}"
+                       Width="302" />
+            
+            <Rectangle Grid.Column="1"
+                       Height="40"
+                       Width="8"
+                       Margin="-4 0 0 0"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Left"
+                       Fill="{StaticResource DeusGold}">
+                <Rectangle.Projection>
+                    <PlaneProjection RotationY="-55" />
+                </Rectangle.Projection>
+            </Rectangle>
+
+            <TextBlock Text="TODAY STEPS"
+                       FontSize="{StaticResource SmallFont}"
+                       Opacity="0.90"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Grid.Row="1">
+                <TextBlock.Projection>
+                    <PlaneProjection RotationX="30" />
+                </TextBlock.Projection>
+            </TextBlock>
+        </Grid>
+        
+        <Grid Grid.Row="2" Margin="0 10 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+
+            <TextBlock Grid.Column="1"
+                       Margin="5 0 0 -5"
+                       FontWeight="Thin"
+                       Foreground="{StaticResource DeusGold}">
+                <TextBlock.Projection>
+                    <PlaneProjection RotationX="-10" />
+                </TextBlock.Projection>
+                <Run Text="{Binding TodayDistance, FallbackValue=5.5, TargetNullValue=0.0}" FontSize="{StaticResource BigFont}"/>
+                <Run Text=" km" FontSize="{StaticResource MediumFont}" />
+            </TextBlock>
+
+            <Rectangle VerticalAlignment="Bottom"
+                       Grid.Column="1"
+                       Height="3"
+                       Fill="{StaticResource DeusGold}"
+                       Width="260" />
+
+            <Rectangle Fill="{StaticResource DeusGold}"
+                       Height="40"
+                       Width="8"
+                       Margin="0 0 -2 0"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Right">
+                <Rectangle.Projection>
+                    <PlaneProjection RotationY="55" />
+                </Rectangle.Projection>
+            </Rectangle>
+
+            <TextBlock Text="DISTANCE"
+                       Grid.Column="1"
+                       Grid.Row="1"
+                       FontSize="{StaticResource SmallFont}"
+                       Opacity="0.9"
+                       HorizontalAlignment="Left">
+                <TextBlock.Projection>
+                    <PlaneProjection RotationX="30" />
+                </TextBlock.Projection>
+            </TextBlock>
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Margin="140 10 0 -5"
+                       Foreground="{StaticResource DeusGold}"
+                       HorizontalAlignment="Left"
+                       RenderTransformOrigin="0.5,0.5">
+                <TextBlock.Projection>
+                    <PlaneProjection RotationX="-10" />
+                </TextBlock.Projection>
+            <Run Text="{Binding ActiveTime, FallbackValue=321, TargetNullValue=0}"
+                 FontSize="{StaticResource BigFont}"
+                 FontWeight="Light"
+                  />
+                <!--<Run Text=" min"
+                     FontSize="{StaticResource MediumFont}" />-->
+            </TextBlock>
+
+            <Rectangle VerticalAlignment="Bottom"
+                       Height="4"
+                       HorizontalAlignment="Right"
+                       Fill="{StaticResource DeusGold}"
+                       Width="146" />
+
+            <Rectangle Grid.Column="0"
+                       Grid.Row="1"
+                       Height="150"
+                       Width="8"
+                       Margin="0 0 0 0"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Center"
+                       Fill="{StaticResource DeusGold}">
+                <Rectangle.Projection>
+                    <PlaneProjection RotationY="-55" />
+                </Rectangle.Projection>
+            </Rectangle>
+            
+            <TextBlock Text="MIN" Grid.Row="1"
+                       HorizontalAlignment="Center"
+                       FontSize="{StaticResource SmallFont}"
+                       Margin="-40 0 0 0"
+                       FontWeight="Light"
+                       Opacity="0.9"
+                       VerticalAlignment="Top"
+                       RenderTransformOrigin="0.5,0.5">
+                <TextBlock.Projection>
+                    <PlaneProjection RotationX="-40" />
+                </TextBlock.Projection>
+                <TextBlock.RenderTransform>
+                    <CompositeTransform Rotation="-90" />
+                </TextBlock.RenderTransform>
+            </TextBlock>
+
+            <TextBlock Text="ACTIVE TIME"
+                       FontSize="{StaticResource SmallFont}"
+                       Opacity="0.90"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Grid.Row="1">
+                <TextBlock.Projection>
+                    <PlaneProjection RotationX="30" />
+                </TextBlock.Projection>
+            </TextBlock>
+        </Grid>
+
+        <Grid Grid.Row="3"
+              Background="{StaticResource DeusGold}"
+              Height="35"
+              Tap="RefreshGrid_Tap"
+              VerticalAlignment="Bottom"
+              HorizontalAlignment="Stretch">
+            <TextBlock Text="REFRESH"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Center"
+                       FontSize="{StaticResource SmallFont}" />
+        </Grid>
+
+    </Grid>
+</UserControl>

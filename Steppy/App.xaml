@@ -1,0 +1,31 @@
+﻿<Application
+    x:Class="Steppy.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:core="clr-namespace:System;assembly=mscorlib"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone">
+
+    <!--Application Resources-->
+    <Application.Resources>
+        <local:LocalizedStrings xmlns:local="clr-namespace:Steppy" x:Key="LocalizedStrings"/>
+        <SolidColorBrush x:Key="DeusGold"
+                         Color="#C9A64A" />
+        
+        <SolidColorBrush x:Key="DeusBlack"
+                         Color="#010504" />
+        
+        <core:Double x:Key="BigFont">75</core:Double>
+        <core:Double x:Key="SmallFont">24</core:Double>
+        <core:Double x:Key="MediumFont">35</core:Double>
+        
+    </Application.Resources>
+
+    <Application.ApplicationLifetimeObjects>
+        <!--Required object that handles lifetime events for the application-->
+        <shell:PhoneApplicationService
+            Launching="Application_Launching" Closing="Application_Closing"
+            Activated="Application_Activated" Deactivated="Application_Deactivated"/>
+    </Application.ApplicationLifetimeObjects>
+
+</Application>
