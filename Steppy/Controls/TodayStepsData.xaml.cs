@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -14,23 +15,30 @@ namespace Steppy.Controls
 {
     public partial class TodayStepsData : UserControl
     {
-        private TodayStepsDataVm _vm;
+        private readonly StepsDataVm _vm;
 
         public TodayStepsData()
         {
             InitializeComponent();
 
-            _vm = new TodayStepsDataVm();
+            if (!DesignerProperties.IsInDesignTool)
+            {
+                _vm = new StepsDataVm();
 
-            DataContext = _vm;
-
-            Loaded += delegate { _vm.UpdateData(); };
+                DataContext = _vm;
+            }
+            
         }
 
-
-        private void RefreshGrid_Tap(object sender, GestureEventArgs e)
+        private void UpdateData()
         {
             _vm.UpdateData();
+            _vm.DailyGoalWidth = DailyProgressBar.Width * (_vm.DailyGoalPercentage / 100);
+        }
+
+        private void RefreshGrid_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            UpdateData();
         }
     }
 }

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO.IsolatedStorage;
 using System.Resources;
 using System.Windows;
 using System.Windows.Markup;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Steppy.BusinessLayer.Helpers;
 using Steppy.Resources;
 
 namespace Steppy
@@ -55,6 +58,18 @@ namespace Steppy
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
+        }
+
+        private void ApplyTheme()
+        {
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("themeColor"))
+            {
+                Resources["ThemeColor"] = new SolidColorBrush(ColorHelper.ConvertStringToColor(IsolatedStorageSettings.ApplicationSettings["themeColor"] as String));
+            }
+            else
+            {
+                Resources["ThemeColor"] = new SolidColorBrush(ColorHelper.ConvertStringToColor("#C9A64A"));
+            }
         }
 
         // Code to execute when a contract activation such as a file open or save picker returns 

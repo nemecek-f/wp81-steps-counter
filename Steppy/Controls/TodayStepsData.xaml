@@ -29,6 +29,7 @@
 
         <Rectangle Width="480"
                    Fill="#302D2D"
+                   x:Name="DailyProgressBar"
                    VerticalAlignment="Top"
                    Height="10" />
 
@@ -36,7 +37,7 @@
                    Fill="{StaticResource DeusGold}"
                    Height="10"
                    HorizontalAlignment="Left"
-                   Width="250" />
+                   Width="{Binding DailyGoalWidth, FallbackValue=200}" />
 
         <TextBlock VerticalAlignment="Top"
                    Margin="5 10 0 0"

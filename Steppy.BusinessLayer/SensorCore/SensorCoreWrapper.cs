@@ -15,11 +15,21 @@ namespace Steppy.BusinessLayer.SensorCore
 
         public bool IsSensorConnected { get; private set; }
 
+        public event EventHandler SensorConnected;
+
         private static readonly SensorCoreWrapper _instance = new SensorCoreWrapper();
 
         public static SensorCoreWrapper Instance
         {
             get { return _instance; }
+        }
+
+        private void OnSensorConnected()
+        {
+            if (SensorConnected != null)
+            {
+                SensorConnected(this, new EventArgs());
+            }
         }
 
         private SensorCoreWrapper()
@@ -45,6 +55,8 @@ namespace Steppy.BusinessLayer.SensorCore
             _stepCounter = await StepCounter.GetDefaultAsync();
 
             IsSensorConnected = true;
+
+            OnSensorConnected();
         }
 
         public async Task ReconnectSensor()
@@ -54,6 +66,8 @@ namespace Steppy.BusinessLayer.SensorCore
             _stepCounter = null;
 
             _stepCounter = await StepCounter.GetDefaultAsync();
+
+            OnSensorConnected();
         }
 
         private async Task CheckIfSensorIsSupported()
