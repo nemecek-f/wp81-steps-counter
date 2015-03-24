@@ -18,7 +18,11 @@ namespace Steppy
         {
             InitializeComponent();
 
-            
+
+            //Loaded += delegate
+            //{
+            //    NavigationService.Navigate(new Uri("/Pages/Concepts/NatureBackground.xaml", UriKind.Relative));
+            //};
 
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
@@ -39,5 +43,14 @@ namespace Steppy
         //    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
         //    ApplicationBar.MenuItems.Add(appBarMenuItem);
         //}
+        private void ConceptOnce_BtnClick(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Pages/Concepts/NatureBackground.xaml", UriKind.Relative));
+        }
+
+        private void ConceptTwo_BtnClick(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Pages/Concepts/SolidFillBackground.xaml", UriKind.Relative));
+        }
     }
 }

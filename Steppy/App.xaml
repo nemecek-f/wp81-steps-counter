@@ -15,8 +15,14 @@
         <SolidColorBrush x:Key="ThemeColor"
                          Color="#C9A64A" />
         
+        <SolidColorBrush x:Key="Test"
+                         Color="#BE663C" />
+        
         <SolidColorBrush x:Key="DeusBlack"
                          Color="#010504" />
+        
+        <SolidColorBrush x:Key="BrightOrange"
+                         Color="#FFFF703C" />
         
         <core:Double x:Key="BigFont">75</core:Double>
         <core:Double x:Key="SmallFont">22</core:Double>

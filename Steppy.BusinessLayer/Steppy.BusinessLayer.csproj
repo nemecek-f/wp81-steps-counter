@@ -85,12 +85,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Converters\ColorToBrushConverter.cs" />
+    <Compile Include="Extensions\TimeSpanEx.cs" />
     <Compile Include="Helpers\ColorHelper.cs" />
     <Compile Include="Interfaces\IStepStatsProvider.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\PropertyChangedBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\StepsHistory.cs" />
+    <Compile Include="Reference\ConstantValues.cs" />
     <Compile Include="Reference\TempValues.cs" />
     <Compile Include="SensorCore\SensorCoreWrapper.cs" />
     <Compile Include="StepCounterExceptions.cs" />

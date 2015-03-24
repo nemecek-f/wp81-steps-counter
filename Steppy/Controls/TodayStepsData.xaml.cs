@@ -32,7 +32,7 @@ namespace Steppy.Controls
 
         private void UpdateData()
         {
-            _vm.UpdateData();
+            _vm.UpdateTodayData();
             _vm.DailyGoalWidth = DailyProgressBar.Width * (_vm.DailyGoalPercentage / 100);
         }
 

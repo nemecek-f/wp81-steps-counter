@@ -70,12 +70,28 @@ namespace Steppy.BusinessLayer.SensorCore
             OnSensorConnected();
         }
 
+        public async Task DisconnectSensor()
+        {
+            await _stepCounter.DeactivateAsync();
+        }
+
         private async Task CheckIfSensorIsSupported()
         {
             if (!await StepCounter.IsSupportedAsync())
             {
                 throw new SensorNotSupportedException();
             }
+        }
+
+        public async Task<StepCounterReading> GetActualReading()
+        {
+            if (IsSensorConnected)
+            {
+                return await _stepCounter.GetCurrentReadingAsync();
+            }
+
+
+            throw new SensorNotConnectedException();
         }
 
         public async Task<StepCount> GetTodayStats()
@@ -88,6 +104,33 @@ namespace Steppy.BusinessLayer.SensorCore
             }
 
             throw new SensorNotConnectedException("Sensor not connected");
+        }
+
+
+        public async Task<StepCounterReading> GetTodayStatsTwo()
+        {
+            if (IsSensorConnected)
+            {
+                DateTimeOffset dayStart = StartOfTheDay();
+                TimeSpan untilNow = UntilNow(dayStart.Ticks);
+                return await _stepCounter.GetCurrentReadingAsync();
+            }
+
+            throw new SensorNotConnectedException("Sensor not connected");
+        }
+
+        public async Task<StepCount> GetYesterdayStatsAsync()
+        {
+            if (IsSensorConnected)
+            {
+
+                return
+                    await
+                        _stepCounter.GetStepCountForRangeAsync(StartOfTheDay() - TimeSpan.FromHours(24),
+                            TimeSpan.FromHours(24));
+            }
+
+            throw new SensorNotConnectedException();
         }
 
         private DateTimeOffset StartOfTheDay()
@@ -109,7 +152,7 @@ namespace Steppy.BusinessLayer.SensorCore
 
             if (IsSensorConnected)
             {
-                var lastThirtyDays = await _stepCounter.GetStepCountHistoryAsync(DateTimeOffset.Now.AddDays(-30), TimeSpan.FromDays(30));
+                var lastThirtyDays = await _stepCounter.GetStepCountHistoryAsync(DateTimeOffset.Now.AddDays(-31), TimeSpan.FromDays(30));
 
                 list.AddRange(from dayHistory in lastThirtyDays
                     select

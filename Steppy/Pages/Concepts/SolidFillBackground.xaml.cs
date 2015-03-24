@@ -8,17 +8,15 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using Steppy.BusinessLayer.Reference;
 using Steppy.ViewModels;
-using GestureEventArgs = System.Windows.Input.GestureEventArgs;
 
 namespace Steppy.Pages.Concepts
 {
-    public partial class NatureBackground : PhoneApplicationPage
+    public partial class SolidFillBackground : PhoneApplicationPage
     {
         private readonly StepsDataVm _vm;
 
-        public NatureBackground()
+        public SolidFillBackground()
         {
             InitializeComponent();
 
@@ -28,22 +26,17 @@ namespace Steppy.Pages.Concepts
 
                 DataContext = _vm;
 
-                
+                _vm.DataLoaded += delegate { Intro.Begin(); };
             }
         }
 
-        protected override void OnBackKeyPress(CancelEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            e.Cancel = true;
-
-            Application.Current.Terminate();
+            _vm.UpdateTodayData();
             
-            base.OnBackKeyPress(e);
-        }
+            base.OnNavigatedTo(e);
 
-        private void SettingsIcon_Tap(object sender, GestureEventArgs e)
-        {
-            NavigationService.Navigate(new Uri(ConstantValues.Pages.SettingsPage, UriKind.Relative));
+            
         }
     }
 }

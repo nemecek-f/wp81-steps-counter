@@ -1,0 +1,8 @@
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\x86\Release\Steppy.BusinessLayer.dll
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\x86\Release\Steppy.BusinessLayer.pdb
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\x86\Release\Lumia.Sense.winmd
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\x86\Release\Lumia.Sense.dll
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\x86\Release\Lumia.Sense.xml
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\obj\x86\Release\Steppy.BusinessLayer.csprojResolveAssemblyReference.cache
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\obj\x86\Release\Steppy.BusinessLayer.dll
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\obj\x86\Release\Steppy.BusinessLayer.pdb

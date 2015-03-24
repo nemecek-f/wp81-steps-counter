@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -42,7 +43,9 @@ namespace Steppy.Pages
         {
             if (e.AddedItems.Count > 0)
             {
-                Resources["ThemeColor"] = new SolidColorBrush((Color)e.AddedItems[0]);
+                ((SolidColorBrush) App.Current.Resources["ThemeColor"]).Color = (Color)e.AddedItems[0];
+                IsolatedStorageSettings.ApplicationSettings["themeColor"] = ((Color) e.AddedItems[0]).ToString();
+                IsolatedStorageSettings.ApplicationSettings.Save();
                 NavigationService.GoBack();
             }
         }

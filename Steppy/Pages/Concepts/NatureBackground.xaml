@@ -19,21 +19,37 @@
                     Value="10 0" />
             <Setter Property="FontWeight"
                     Value="Light" />
+            <Setter Property="Foreground"
+                    Value="White" />
         </Style>
         
         <Style TargetType="Grid"
                x:Key="BackgroundGrid">
             <Setter Property="Background"
-                    Value="Gray" />
+                    Value="{StaticResource ThemeColor}" />
             <Setter Property="Opacity"
-                    Value="0.3" />
+                    Value="0.25" />
         </Style>
+        
+        <Style TargetType="TextBlock"
+               x:Key="InfoText">
+            <Setter Property="Opacity"
+                    Value="0.6" />
+            <Setter Property="Margin"
+                    Value="10 0" />
+            <Setter Property="FontWeight"
+                    Value="Light" />
+            <Setter Property="Foreground"
+                    Value="White" />
+        </Style>
+        
+       
     </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
-            <RowDefinition Height="320" />
+            <RowDefinition Height="290" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -59,7 +75,16 @@
                 </LinearGradientBrush>
             </Grid.Background>
         </Grid>
-        
+
+        <Rectangle Grid.Row="1"
+                   Margin="0 5 0 0"
+                   Height="210"
+                   HorizontalAlignment="Stretch"
+                   Fill="{StaticResource ThemeColor}"
+                   Opacity="0.15"
+                   VerticalAlignment="Top"
+                   Grid.RowSpan="3" />
+
         <TextBlock Grid.Row="1"
                    Text="TODAY" 
                    FontSize="{StaticResource MediumFont}"/>
@@ -69,23 +94,25 @@
               Height="160"
               Margin="10 0 0 0"
               HorizontalAlignment="Left"
-              Background="Gray"
-              Opacity="0.35" />
+              Style="{StaticResource BackgroundGrid}" />
         
         <StackPanel Grid.Row="2"
                     Width="240"
                     Margin="10 0 0 0"
                     HorizontalAlignment="Left">
             <TextBlock Text="STEPS"
-                       Foreground="White"
-                       Opacity="0.8"
+                       
+                       Style="{StaticResource InfoText}"
                        Margin="15 5 0 0"
                        FontSize="{StaticResource SmallFont}" />
-            <TextBlock Text="3537" Margin="10 -15 0 0"
+            <TextBlock Text="{Binding TodaySteps, FallbackValue=3472}" Margin="10 -15 0 0"
                        FontSize="{StaticResource BigFont}" />
-            <!--<TextBlock Text="Distance" />
-            <TextBlock Text="4.5 km"
-                       FontSize="{StaticResource MediumFont}" />-->
+            
+            <TextBlock Text="/10000" 
+                       Opacity="0.6"
+                       FontSize="{StaticResource MediumFont}"
+                       Margin="15 -20 0 0"/>
+           
         </StackPanel>
 
         <Grid Grid.Row="2"
@@ -94,8 +121,7 @@
               Height="75"
               Margin="0 0 10 0"
               VerticalAlignment="Top"
-              Background="Gray"
-              Opacity="0.35" />
+              Style="{StaticResource BackgroundGrid}" />
         
         <StackPanel Grid.Row="2"
                     HorizontalAlignment="Right"
@@ -103,12 +129,15 @@
                     Margin="0 0 10 0"
                     VerticalAlignment="Top">
             <TextBlock Text="DISTANCE" Margin="10 2 10 0"
-                       Opacity="0.8"
+                       Style="{StaticResource InfoText}"
                        FontSize="{StaticResource SmallFont}" />
 
-            <TextBlock Text="5,6 km"
+            <TextBlock 
                        Margin="10 -5 10 0"
-                       FontSize="{StaticResource MediumFont}" />
+                       FontSize="{StaticResource MediumFont}">
+                <Run Text="{Binding TodayDistance, FallbackValue=5.6}" />
+                <Run Text=" km" />
+            </TextBlock>
         </StackPanel>
         
         <Grid Grid.Row="2"
@@ -117,8 +146,7 @@
               Height="75"
               Margin="0 0 10 0"
               VerticalAlignment="Bottom"
-              Background="Gray"
-              Opacity="0.35" />
+              Style="{StaticResource BackgroundGrid}"/>
         
         <StackPanel Grid.Row="2"
                     HorizontalAlignment="Right"
@@ -126,98 +154,165 @@
                     Margin="0 0 10 0"
                     Width="225">
             <TextBlock Text="ACTIVE TIME"
-                       Opacity="0.8"
+                       Style="{StaticResource InfoText}"
                        FontSize="{StaticResource SmallFont}" />
-            <TextBlock Text="45m" Margin="10 -5 10 0"
+            <TextBlock Text="{Binding TodayActiveTime, FallbackValue=1h 55m}" Margin="10 -5 10 0"
                        FontSize="{StaticResource MediumFont}" />
         </StackPanel>
 
-        <TextBlock Grid.Row="3"
+        <Grid Grid.Row="5"
+              >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+        <Rectangle Grid.Row="0"
+                   Grid.RowSpan="2"
+                   Fill="{StaticResource ThemeColor}"
+                   Opacity="0.15" Margin="0 30 0 -10" />
+
+        <TextBlock Grid.Row="0"
+                   Margin="10 30 10 0"
                    Text="YESTERDAY"
                    FontSize="{StaticResource MediumFont}" />
 
-        <Grid Grid.Row="4"
+        <Grid Grid.Row="1"
               Height="80"
               Margin="10 0"
-              Background="Gray"
-              Opacity="0.3"></Grid>
-        
-        <Grid Grid.Row="4"
-              Height="80"
-              Margin="10 0"
-              >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
+              Style="{StaticResource BackgroundGrid}"></Grid>
 
-            <TextBlock Text="STEPS"
-                       FontSize="{StaticResource SmallFont}" />
+            <Grid Grid.Row="1"
+                  Height="80"
+                  Margin="10 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
 
-            <TextBlock Text="23181"
-                       FontSize="{StaticResource MediumFont}" 
-                       VerticalAlignment="Bottom"/>
+                <TextBlock Text="STEPS"
+                           Margin="10 5 0 0"
+                           Style="{StaticResource InfoText}"
+                           FontSize="{StaticResource SmallFont}" />
+
+                <TextBlock Text="{Binding YesterdaySteps, TargetNullValue=--, FallbackValue=2434}"
+                           FontSize="{StaticResource MediumFont}"
+                           VerticalAlignment="Bottom" />
+
+                <TextBlock Grid.Column="1"
+                           Text="DISTANCE"
+                           Style="{StaticResource InfoText}"
+                           Margin="10 5 0 0"
+                           FontSize="{StaticResource SmallFont}" />
+
+                <TextBlock Grid.Column="1"
+                           FontSize="{StaticResource MediumFont}"
+                           VerticalAlignment="Bottom">
+                <Run Text="{Binding YesterdayDistance, FallbackValue=4}" />
+                <Run Text=" km" />
+                </TextBlock>
+
+                <TextBlock Grid.Column="2"
+                           Text="ACTIVE TIME"
+                           Style="{StaticResource InfoText}"
+                           Margin="10 5 0 0"
+                           FontSize="{StaticResource SmallFont}" />
+                <TextBlock Grid.Column="2"
+                           Text="{Binding YesterdayActiveTime, FallbackValue=23m}"
+                           FontSize="{StaticResource MediumFont}"
+                           VerticalAlignment="Bottom" />
             
-            <TextBlock Grid.Column="1"
-                       Text="DISTANCE"
-                       FontSize="{StaticResource SmallFont}"/>
-            
-            <TextBlock Grid.Column="1"
-                       Text="33.5 km"
-                       FontSize="{StaticResource MediumFont}"
-                       VerticalAlignment="Bottom" />
-            
-            <TextBlock Grid.Column="2"
-                       Text="ACTIVE TIME"
-                       FontSize="{StaticResource SmallFont}" />
-            <TextBlock Grid.Column="2"
-                       Text="2h 37m"
-                       FontSize="{StaticResource MediumFont}" 
-                       VerticalAlignment="Bottom"/>
+        </Grid>
         </Grid>
 
-        <Grid Grid.Row="5"
+        <Grid Grid.Row="3"
               VerticalAlignment="Bottom"
-              Background="White"
-              Opacity="0.25"
-              Height="100">
-            <ScrollViewer>
+              Background="{StaticResource ThemeColor}"
+              Opacity="0.15"
+              Margin="0 40 0 0"
+              Height="100" />
+            <ScrollViewer Grid.Row="3" VerticalAlignment="Bottom"
+                          HorizontalScrollBarVisibility="Hidden"
+                          VerticalScrollBarVisibility="Disabled"
+                          Width="480"
+                          Height="100">
                 <StackPanel Orientation="Horizontal">
-                    <Grid Width="80"
+                    <Grid Width="220"
                           Margin="10"
-                          Background="Gray"
+                          
                           Height="80">
-                        <Image Source="\Assets\Icons\appbar.calendar.day.png" />
-                    </Grid>  <Grid Width="80"
+                    <Rectangle Width="220"
+                               Height="80"
+                               Opacity="0.2"
+                               Fill="{StaticResource ThemeColor}"/>
+                    <Image Margin="0 -20 0 0"
+                               Width="80"
+                            Source="\Assets\Icons\appbar.calendar.day.png" />
+
+                    <TextBlock Text="HISTORY"
+                               Style="{StaticResource InfoText}"
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Center"/>
+                        
+                </Grid>   
+                    
+                    <Grid Width="170"
                           Margin="10"
-                          Background="Gray"
                           Height="80">
-                        <Image Source="\Assets\Icons\appbar.calendar.day.png" />
-                    </Grid>  <Grid Width="80"
+                    <Rectangle Width="170"
+                               Height="80"
+                               Opacity="0.2"
+                               Fill="{StaticResource ThemeColor}" />
+                    <Image Margin="0 -20 0 0"
+                               Width="80"
+                            Source="\Assets\Icons\appbar.map.treasure.png" />
+
+                    <TextBlock Text="TRACKING"
+                               Style="{StaticResource InfoText}"
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Center"/>
+                        
+                </Grid>   
+                    <Grid Width="170"
                           Margin="10"
-                          Background="Gray"
                           Height="80">
-                        <Image Source="\Assets\Icons\appbar.calendar.day.png" />
-                    </Grid>  <Grid Width="80"
+                    <Rectangle Width="170"
+                               Height="80"
+                               Opacity="0.2"
+                               Fill="{StaticResource ThemeColor}" />
+                    <Image Margin="0 -20 0 0"
+                               Width="80"
+                            Source="\Assets\Icons\appbar.ribbon.png" />
+
+                    <TextBlock Text="ACHIEVEMENTS"
+                               Style="{StaticResource InfoText}"
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Center"/>
+                        
+                </Grid>  
+                    
+                    <Grid Width="170"
                           Margin="10"
-                          Background="Gray"
+                          Tap="SettingsIcon_Tap"
                           Height="80">
-                        <Image Source="\Assets\Icons\appbar.calendar.day.png" />
-                    </Grid>  <Grid Width="80"
-                          Margin="10"
-                          Background="Gray"
-                          Height="80">
-                        <Image Source="\Assets\Icons\appbar.calendar.day.png" />
-                    </Grid>  <Grid Width="80"
-                          Margin="10"
-                          Background="Gray"
-                          Height="80">
-                        <Image Source="\Assets\Icons\appbar.calendar.day.png" />
-                    </Grid>
+                    <Rectangle Width="170"
+                               Height="80"
+                               Opacity="0.2"
+                               Fill="{StaticResource ThemeColor}" />
+                    <Image Margin="0 -20 0 0"
+                               Width="50"
+                            Source="\Assets\Icons\appbar.cogs.png" />
+
+                    <TextBlock Text="SETTINGS"
+                               Style="{StaticResource InfoText}"
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Center"/>
+                        
+                </Grid>  
                 </StackPanel>
             </ScrollViewer>
-        </Grid>
+    
 
     </Grid>
 

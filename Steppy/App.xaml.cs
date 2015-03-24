@@ -9,6 +9,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Steppy.BusinessLayer.Helpers;
+using Steppy.BusinessLayer.SensorCore;
 using Steppy.Resources;
 
 namespace Steppy
@@ -64,11 +65,11 @@ namespace Steppy
         {
             if (IsolatedStorageSettings.ApplicationSettings.Contains("themeColor"))
             {
-                Resources["ThemeColor"] = new SolidColorBrush(ColorHelper.ConvertStringToColor(IsolatedStorageSettings.ApplicationSettings["themeColor"] as String));
+                ((SolidColorBrush) Resources["ThemeColor"]).Color = ColorHelper.ConvertStringToColor(IsolatedStorageSettings.ApplicationSettings["themeColor"] as String);
             }
             else
             {
-                Resources["ThemeColor"] = new SolidColorBrush(ColorHelper.ConvertStringToColor("#C9A64A"));
+                ((SolidColorBrush) Resources["ThemeColor"]).Color = ColorHelper.ConvertStringToColor("#BE663C");
             }
         }
 
@@ -82,24 +83,28 @@ namespace Steppy
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            ApplyTheme();
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
-        private void Application_Activated(object sender, ActivatedEventArgs e)
+        private async void Application_Activated(object sender, ActivatedEventArgs e)
         {
+            await SensorCoreWrapper.Instance.ReconnectSensor();
         }
 
         // Code to execute when the application is deactivated (sent to background)
         // This code will not execute when the application is closing
-        private void Application_Deactivated(object sender, DeactivatedEventArgs e)
+        private async void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
+            await SensorCoreWrapper.Instance.DisconnectSensor();
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
         // This code will not execute when the application is deactivated
-        private void Application_Closing(object sender, ClosingEventArgs e)
+        private async void Application_Closing(object sender, ClosingEventArgs e)
         {
+            await SensorCoreWrapper.Instance.DisconnectSensor();
         }
 
         // Code to execute if a navigation fails
