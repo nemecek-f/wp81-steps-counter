@@ -28,6 +28,13 @@ namespace Steppy
             //BuildLocalizedApplicationBar();
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            NavigationService.Navigate(new Uri("/Pages/Concepts/SolidFillBackground.xaml", UriKind.Relative));
+        }
+
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()
         //{

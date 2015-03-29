@@ -8,6 +8,7 @@ using Steppy.BusinessLayer.Models;
 using Steppy.BusinessLayer.Reference;
 using Steppy.BusinessLayer.SensorCore;
 
+
 namespace Steppy.ViewModels
 {
     public class StepsDataVm : PropertyChangedBase
@@ -15,13 +16,14 @@ namespace Steppy.ViewModels
         private double _todayDistance;
         private int _todaySteps;
         private TimeSpan _activeTime;
-        private double StepLength = 76.2;
         private double _dailyGoalPercentage;
         private double _dailyGoalWidth;
         private int _yesterdaySteps;
         private double _yesterdayDistance;
         private TimeSpan _yesterdayActiveTime;
         private const int CentimetersInKilometer = 100000;
+
+        private bool _loaded;
 
         public event EventHandler DataLoaded;
 
@@ -51,10 +53,15 @@ namespace Steppy.ViewModels
                 TodaySteps = (int)(todayStats.WalkingStepCount + todayStats.RunningStepCount);
                 TodayDistance = Math.Round((TodaySteps * TempValues.StepCentimeterLength) / CentimetersInKilometer, 2);
                 ActiveTime = todayStats.RunTime.Add(todayStats.WalkTime);
-                DailyGoalPercentage = (TodaySteps/TempValues.DailyGoal)*100;
-                OnDataLoaded();
+                DailyGoalPercentage = (TodaySteps / TempValues.DailyGoal) * 100;
+
+                if (!_loaded)
+                {
+                    OnDataLoaded();
+                    _loaded = true;
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
@@ -66,12 +73,12 @@ namespace Steppy.ViewModels
             {
                 var yesterdayStats = await SensorCoreWrapper.Instance.GetYesterdayStatsAsync();
                 YesterdaySteps = (int)(yesterdayStats.RunningStepCount + yesterdayStats.WalkingStepCount);
-                YesterdayDistance = Math.Round((YesterdaySteps*TempValues.StepCentimeterLength)/CentimetersInKilometer,
+                YesterdayDistance = Math.Round((YesterdaySteps * TempValues.StepCentimeterLength) / CentimetersInKilometer,
                     2);
                 YesterdayActiveTimeTs = yesterdayStats.RunTime.Add(yesterdayStats.WalkTime);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }

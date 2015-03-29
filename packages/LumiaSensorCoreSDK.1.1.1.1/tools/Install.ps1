@@ -34,7 +34,7 @@ if( Test-Path $manifestPath )
 		#
 		# Make sure location capability exists
 		#	
-		$locelement = $capsnode.SelectSingleNode("//ns:DeviceCapability[@Name = 'location']", $ns)
+		$locelement = $capsnode.SelectSingleNode(".//ns:DeviceCapability[@Name = 'location']", $ns)
 		if( $locelement -eq $null )
 		{
 			Write-Host "Adding location capability"
@@ -48,7 +48,7 @@ if( Test-Path $manifestPath )
 		#
 		# Make sure humaninterfacedevice capability exists
 		#	
-		$hidelement = $capsnode.SelectSingleNode("//m2:DeviceCapability[@Name = 'humaninterfacedevice']", $ns)
+		$hidelement = $capsnode.SelectSingleNode(".//m2:DeviceCapability[@Name = 'humaninterfacedevice']", $ns)
 		if( $hidelement -eq $null )
 		{
 			Write-Host "Adding HID node"
@@ -61,7 +61,7 @@ if( Test-Path $manifestPath )
 		#
 		# Make sure Sense HID device node exists
 		#	
-		$hiddeviceelement = $hidelement.SelectSingleNode("//m2:Device[@Id = 'vidpid:0421 0716']", $ns)
+		$hiddeviceelement = $hidelement.SelectSingleNode(".//m2:Device[@Id = 'vidpid:0421 0716']", $ns)
 		if( $hiddeviceelement -eq $null )
 		{
 			Write-Host "Adding HID device node"
@@ -74,7 +74,7 @@ if( Test-Path $manifestPath )
 		#
 		# Make sure required usage pages exist
 		#	
-		$page1element =  $hiddeviceelement.SelectSingleNode("//m2:Function[@Type = 'usage:ffaa 0001']", $ns)
+		$page1element =  $hiddeviceelement.SelectSingleNode(".//m2:Function[@Type = 'usage:ffaa 0001']", $ns)
 		if( $page1element -eq $null )
 		{
 			Write-Host "Adding usage page 1 element"
@@ -84,7 +84,7 @@ if( Test-Path $manifestPath )
 			$hiddeviceelement.AppendChild($page1element)
 		}
 		
-		$page2element =  $hiddeviceelement.SelectSingleNode("//m2:Function[@Type = 'usage:ffee 0001']", $ns)
+		$page2element =  $hiddeviceelement.SelectSingleNode(".//m2:Function[@Type = 'usage:ffee 0001']", $ns)
 		if( $page2element -eq $null )
 		{
 			Write-Host "Adding usage page 2 element"
@@ -94,7 +94,7 @@ if( Test-Path $manifestPath )
 			$hiddeviceelement.AppendChild($page2element)
 		}
 		
-		$page3element =  $hiddeviceelement.SelectSingleNode("//m2:Function[@Type = 'usage:ffee 0002']", $ns)
+		$page3element =  $hiddeviceelement.SelectSingleNode(".//m2:Function[@Type = 'usage:ffee 0002']", $ns)
 		if( $page3element -eq $null )
 		{
 			Write-Host "Adding usage page 3 element"
@@ -104,7 +104,7 @@ if( Test-Path $manifestPath )
 			$hiddeviceelement.AppendChild($page3element)
 		}
 		
-		$page4element =  $hiddeviceelement.SelectSingleNode("//m2:Function[@Type = 'usage:ffee 0003']", $ns)
+		$page4element =  $hiddeviceelement.SelectSingleNode(".//m2:Function[@Type = 'usage:ffee 0003']", $ns)
 		if( $page4element -eq $null )
 		{
 			Write-Host "Adding usage page 4 element"
@@ -114,7 +114,7 @@ if( Test-Path $manifestPath )
 			$hiddeviceelement.AppendChild($page4element)
 		}
 		
-		$page5element =  $hiddeviceelement.SelectSingleNode("//m2:Function[@Type = 'usage:ffee 0004']", $ns)
+		$page5element =  $hiddeviceelement.SelectSingleNode(".//m2:Function[@Type = 'usage:ffee 0004']", $ns)
 		if( $page5element -eq $null )
 		{
 			Write-Host "Adding usage page 5 element"
@@ -161,7 +161,7 @@ if( Test-Path $manifest2Path )
 		#
 		# Make sure ID_CAP_LOCATION exists
 		#	
-		$locelement2 = $capsnode2.SelectSingleNode("//Capability[@Name = 'ID_CAP_LOCATION']")
+		$locelement2 = $capsnode2.SelectSingleNode(".//Capability[@Name = 'ID_CAP_LOCATION']")
 		if( $locelement2 -eq $null )
 		{
 			Write-Host "Adding ID_CAP_LOCATION capability"

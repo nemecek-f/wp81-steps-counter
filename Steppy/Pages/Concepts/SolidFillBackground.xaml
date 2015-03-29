@@ -5,10 +5,12 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Steppy.UserControls"
     xmlns:ec="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:eim="clr-namespace:Microsoft.Expression.Interactivity.Media;assembly=Microsoft.Expression.Interactions"
     x:Class="Steppy.Pages.Concepts.SolidFillBackground"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
+    Style="{StaticResource TransitionPageStyle}"
     shell:SystemTray.IsVisible="False">
     
     <phone:PhoneApplicationPage.Resources>
@@ -87,6 +89,28 @@
         	</DoubleAnimationUsingKeyFrames>
     		
         </Storyboard>
+    	<Storyboard x:Name="ShowTracking"
+                    Completed="ShowTracking_Completed">
+    		
+    		<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="TrackingControl">
+    			<SplineDoubleKeyFrame KeyTime="0:0:0.3" Value="-230"/>
+    		</DoubleAnimationUsingKeyFrames>
+    		<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="TrackingControl">
+    			<SplineDoubleKeyFrame KeyTime="0" Value="0"/>
+    			<SplineDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+    		</DoubleAnimationUsingKeyFrames>
+    	</Storyboard>
+    	<Storyboard x:Name="HideTracking"
+                    Completed="HideTracking_Completed">
+    		
+    		<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="TrackingControl">
+    			<SplineDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+    		</DoubleAnimationUsingKeyFrames>
+    		<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="TrackingControl">
+    			<SplineDoubleKeyFrame KeyTime="0" Value="1"/>
+    			<SplineDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+    		</DoubleAnimationUsingKeyFrames>
+    	</Storyboard>
     </phone:PhoneApplicationPage.Resources>
 
 	<phone:PhoneApplicationPage.FontFamily>
@@ -103,7 +127,7 @@
 	<!--LayoutRoot is the root grid where all page content is placed-->
 	<!--LayoutRoot is the root grid where all page content is placed-->
 	<Grid x:Name="LayoutRoot"
-		Background="{StaticResource BrightOrange}">
+		Background="{StaticResource ThemeColor}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="50"/>
 			<RowDefinition Height="Auto"/>
@@ -171,6 +195,9 @@
 			</TextBlock.RenderTransform>
 		</TextBlock>
         
+        
+        <!--BUTTONS GRID-->
+        
         <Grid x:Name="ButtonsGrid"  
               HorizontalAlignment="Right"
               MaxWidth="300"
@@ -193,7 +220,8 @@
             	<Border.Projection>
             		<PlaneProjection RotationY="-90"/>
             	</Border.Projection>
-                <Grid x:Name="grid" Style="{StaticResource ButtonGridStyle}">
+                <Grid x:Name="grid" Style="{StaticResource ButtonGridStyle}"
+                      Tap="HistoryButton_Tap">
                     
                 <Image 
                        Source="\Assets\Icons\appbar.calendar.day.png"
@@ -206,7 +234,9 @@
             	<Border.Projection>
             		<PlaneProjection RotationX="-90"/>
             	</Border.Projection>
-                <Grid x:Name="grid1" Style="{StaticResource ButtonGridStyle}"
+                <Grid x:Name="grid1" 
+                      Tap="TrackingButton_Tap"
+                      Style="{StaticResource ButtonGridStyle}"
                       >
                     
                 <Image 
@@ -220,7 +250,9 @@
             	<Border.Projection>
             		<PlaneProjection RotationY="90" />
             	</Border.Projection>
-                <Grid x:Name="grid2" Style="{StaticResource ButtonGridStyle}">
+                <Grid x:Name="grid2" 
+                      Tap="AchievementsButton_Tap"
+                      Style="{StaticResource ButtonGridStyle}">
                 <Image 
                        Source="\Assets\Icons\appbar.ribbon.png"
                        />
@@ -232,7 +264,9 @@
             	<Border.Projection>
             		<PlaneProjection RotationY="90"/>
             	</Border.Projection>
-                <Grid x:Name="grid3" Style="{StaticResource ButtonGridStyle}">
+                <Grid x:Name="grid3" 
+                      Tap="SettingsButton_Tap"
+                      Style="{StaticResource ButtonGridStyle}">
                     
                 <Image x:Name="image" MaxWidth="80" 
                        Source="\Assets\Icons\appbar.cogs.png"
@@ -244,7 +278,34 @@
                 </Grid>
             </Border>
         </Grid>
+        
+        
+        <!--YESTERDAY STATS-->
+        
+        <Grid Grid.RowSpan="5"
+              x:Name="GesturesGrid"
+              Grid.Row="3"
+              HorizontalAlignment="Right"
+              Width="200"
+              Background="Transparent"
+              ManipulationStarted="GesturesGrid_ManipulationStarted"
+              ManipulationCompleted="GesturesGrid_ManipulationCompleted" />
 
+        <controls:TrackingControl Grid.Row="7"
+                                  Opacity="0"
+                                  Visibility="Collapsed"
+                                  x:Name="TrackingControl"
+                                  VerticalAlignment="Bottom"
+                                 Margin="13 10 15 13"
+                                  Grid.RowSpan="2"
+                                  HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5">
+        	<controls:TrackingControl.RenderTransform>
+        		<CompositeTransform/>
+        	</controls:TrackingControl.RenderTransform>
+        	<controls:TrackingControl.Projection>
+        		<PlaneProjection/>
+        	</controls:TrackingControl.Projection>
+        </controls:TrackingControl>
 	</Grid>
 
 </phone:PhoneApplicationPage>

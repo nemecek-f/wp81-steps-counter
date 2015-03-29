@@ -50,7 +50,7 @@ namespace Steppy.BusinessLayer.SensorCore
 
         public async void ConnectToSensor()
         {
-            await CheckIfSensorIsSupported();
+            //await CheckIfSensorIsSupported();
 
             _stepCounter = await StepCounter.GetDefaultAsync();
 

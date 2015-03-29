@@ -1,26 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System.Linq;
+using Steppy.BusinessLayer.Models;
 using Steppy.BusinessLayer.Reference;
+using Steppy.ViewModels;
 
 namespace Steppy.Pages
 {
     public partial class SettingsPage : PhoneApplicationPage
     {
+        private SettingsPageVm _vm;
+
         public SettingsPage()
         {
             InitializeComponent();
-        }
 
-        private void ThemeSelect_Click(object sender, RoutedEventArgs e)
+            _vm = new SettingsPageVm();
+
+            DataContext = _vm;
+        }
+      
+        private void ThemeOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            NavigationService.Navigate(new Uri(ConstantValues.Pages.ColorPicker, UriKind.Relative));
+            if (e.AddedItems.Count > 0)
+            {
+                var theme = (ThemeOption)e.AddedItems[0];
+
+                ((SolidColorBrush) App.Current.Resources["ThemeColor"]).Color = theme.Color;
+                IsolatedStorageSettings.ApplicationSettings["themeColor"] = theme.Color.ToString();
+                IsolatedStorageSettings.ApplicationSettings.Save();
+            }
         }
     }
 }

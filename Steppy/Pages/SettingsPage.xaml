@@ -5,39 +5,73 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:converters="clr-namespace:Steppy.BusinessLayer.Converters;assembly=Steppy.BusinessLayer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
+    Style="{StaticResource TransitionPageStyle}"
+    shell:SystemTray.Opacity="0"
+    shell:SystemTray.ForegroundColor="White"
     shell:SystemTray.IsVisible="True">
+    
+    <phone:PhoneApplicationPage.Resources>
+        <converters:ColorToBrushConverter x:Key="ColorToBrushConverter" />
+    </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource ThemeColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
+        <Grid Grid.Row="0" Style="{StaticResource PageHeader}">
+
+            <TextBlock Text="SETTINGS" Style="{StaticResource PageHeaderText}"
+                        />
+        </Grid>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
+        <Grid x:Name="ContentPanel" Grid.Row="1" >
+            <phone:Pivot Margin="0 -220 0 0">
+                <phone:PivotItem Header="theme">
+                    <StackPanel Margin="-10 75 0 0">
+                    <TextBlock Text="theme"
+                               FontSize="{StaticResource BigFont}"/>
+                        <phone:LongListSelector LayoutMode="Grid"
+                                                Margin="0 0 0 0"
+                                                SelectionChanged="ThemeOptions_SelectionChanged"
+                                                ItemsSource="{Binding ThemeOptions}"
+                                                GridCellSize="140 150">
+                        <phone:LongListSelector.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="White"
+                                        Margin="5"
+                                        BorderThickness="2">
+                                    
+                                <Rectangle Fill="{Binding Color, Converter={StaticResource ColorToBrushConverter}}" />
+                                </Border>
+                            </DataTemplate>
+                        </phone:LongListSelector.ItemTemplate>
+                        </phone:LongListSelector>
+                    </StackPanel>
+
+                </phone:PivotItem>
+                
+                <phone:PivotItem Header="general">
+                    
+                </phone:PivotItem>
+                <phone:PivotItem Header="details">
+                    
+                </phone:PivotItem>
+            </phone:Pivot>
             
-            <Button Content="Select color theme..."
-                    Click="ThemeSelect_Click" />
+            <!--<Button Content="Select color theme..."
+                    Click="ThemeSelect_Click" />-->
         </Grid>
     </Grid>
 

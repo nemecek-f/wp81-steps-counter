@@ -4,19 +4,92 @@
         "Lumia.Sense (Phone)"
     </assembly>
     <members>
-        <member name="M:Lumia.Sense.TrackPointMonitor.GetPointAtV2(Windows.Foundation.DateTime)">
+        <member name="M:Lumia.Sense.AltitudeMeter.#ctor">
             <summary>
-Returns the location of the device at given time. Supporting Geo v2 functions.
+Constructor
 </summary>
-            <param name="timestamp">Time stamp</param>
-            <returns>Device location at given time</returns>
         </member>
-        <member name="M:Lumia.Sense.TrackPointMonitor.GetPointAtV1(Windows.Foundation.DateTime)">
+        <member name="M:Lumia.Sense.AltitudeMeter.IsSupportedAsync">
             <summary>
-Returns the location of the device at given time. Original version.
+Returns whether the sensor is supported by the device or not.
 </summary>
-            <param name="timestamp">Time stamp</param>
-            <returns>Device location at given time</returns>
+            <returns>
+                <c>true</c> if the sensor is supported, <c>false</c> otherwise</returns>
+        </member>
+        <member name="M:Lumia.Sense.AltitudeMeter.DeactivateAsync">
+            <summary>
+Closes the communication channel with underlying sensor. Connection must be closed whenever application
+is put to background.
+</summary>
+            <returns>
+Returns an IAsyncAction object that is used to control the asynchronous operation.
+</returns>
+        </member>
+        <member name="M:Lumia.Sense.AltitudeMeter.ActivateAsync">
+            <summary>
+Re-establishes the communication channel with underlying sensor, if it doesn't already exist.
+Connection needs to be re-established when the application is brought to foreground.
+</summary>
+            <returns>
+Returns an IAsyncAction object that is used to control the asynchronous operation.
+</returns>
+        </member>
+        <member name="P:Lumia.Sense.AltitudeMeter.Type">
+            <summary>
+The sensor type.
+</summary>
+        </member>
+        <member name="M:Lumia.Sense.AltitudeMeter.Dispose">
+            <summary>
+Destructor
+</summary>
+        </member>
+        <member name="M:Lumia.Sense.AltitudeMeter.GetDefaultAsync">
+            <summary>
+Gets the default implementation.
+</summary>
+            <returns>
+The default implementation. Throws exception if sensor is not supported on the device.
+</returns>
+        </member>
+        <member name="M:Lumia.Sense.AltitudeMeter.GetCurrentReadingAsync">
+            <summary>
+Gets the current altitude reading.
+</summary>
+            <returns>
+The current altitude reading of the sensor.
+</returns>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
+<see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, 
+<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
+            <remarks>
+The return value may be null in case reading cannot be obtained currently.
+</remarks>
+            <example>
+The following example shows how to get the <c>AltitudeMeter</c> and use 
+it to get current altitude.
+<code lang="C#">
+AltitudeMeter altitudeMeter = await AltitudeMeter.GetDefaultAsync();
+AltitudeMeterReading reading = await altitudeMeter.GetCurrentReadingAsync();
+</code></example>
+        </member>
+        <member name="T:Lumia.Sense.AltitudeMeter">
+            <summary>Represents an altitude meter.</summary>
+            <remarks>
+This sensor returns the device's altitude information. The altitude reading is based on 
+information provided by the barometer hardware and the altitude meter is only supported
+in devices with barometer support.
+</remarks>
+        </member>
+        <member name="M:Lumia.Sense.TrackPointMonitor.GetRouteV3(Windows.Foundation.DateTime,Windows.Foundation.TimeSpan)">
+            <summary>
+Returns the track point the device moved during the given time period. Supporting Geo v3 functions.
+</summary>
+            <param name="periodFrom">Start time</param>
+            <param name="span">Time span</param>
+            <returns>Track points for the given time period</returns>
         </member>
         <member name="M:Lumia.Sense.TrackPointMonitor.GetRouteV2(Windows.Foundation.DateTime,Windows.Foundation.TimeSpan)">
             <summary>
@@ -94,8 +167,8 @@ This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enu
 <see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, <see cref="F:Lumia.Sense.SenseError.NotFound" />, 
 <see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
             <remarks>
-The available data extends only up to last 10 days. The return value 
-is <c>null</c> in case track point is not available for the given time.
+The available data extends only up to last 10 days. The return value is <c>null</c> in case track point is not available for the given time
+or data is requested from before the 10 days or from the future.
 </remarks>
             <example>
 The following example shows how to get the <c>TrackPointMonitor</c> and fetch a track
@@ -163,198 +236,6 @@ TrackPointMonitor trackPointMonitor = await TrackPointMonitor.GetDefaultAsync();
 TrackPoint trackPoint = await trackPointMonitor.GetPointAtAsync( DateTime.Now.AddHours( -1 ) );
 </code></example>
         </member>
-        <member name="M:Lumia.Sense.ActivityMonitor.PrepareActivityMonitorReading(HIDMessage.ActivityMonitorReading!System.Runtime.CompilerServices.IsConst*,System.UInt64)">
-            <summary>
-Creates new activity monitor reading based on the given data
-</summary>
-            <param name="reading">activity monitor reading HID message</param>
-            <param name="mask">activity class mask</param>
-            <returns>Activity monitor reading populated with the given data</returns>
-        </member>
-        <member name="M:Lumia.Sense.ActivityMonitor.#ctor">
-            <summary>
-Constructor
-</summary>
-        </member>
-        <member name="M:Lumia.Sense.ActivityMonitor.IsSupportedAsync">
-            <summary>
-Returns whether the sensor is supported by the device or not.
-</summary>
-            <returns>
-                <c>true</c> if the sensor is supported, <c>false</c> otherwise</returns>
-        </member>
-        <member name="M:Lumia.Sense.ActivityMonitor.DeactivateAsync">
-            <summary>
-Closes the communication channel with underlying sensor. Connection must be closed whenever application
-is put to background.
-</summary>
-            <returns>
-Returns an IAsyncAction object that is used to control the asynchronous operation.
-</returns>
-            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
-<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
-This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: <see cref="F:Lumia.Sense.SenseError.GeneralFailure" /></exception>
-        </member>
-        <member name="M:Lumia.Sense.ActivityMonitor.ActivateAsync">
-            <summary>
-Re-establishes the communication channel with underlying sensor, if it doesn't already exist.
-Connection needs to be re-established when the application is brought to foreground.
-</summary>
-            <returns>
-Returns an IAsyncAction object that is used to control the asynchronous operation.
-</returns>
-            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
-<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
-This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: <see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, 
-<see cref="F:Lumia.Sense.SenseError.LocationDisabled" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" /></exception>
-        </member>
-        <member name="P:Lumia.Sense.ActivityMonitor.Type">
-            <summary>
-The sensor type.
-</summary>
-        </member>
-        <member name="M:Lumia.Sense.ActivityMonitor.Dispose">
-            <summary>
-Destructor
-</summary>
-        </member>
-        <member name="M:Lumia.Sense.ActivityMonitor.GetDefaultAsync">
-            <summary>
-Gets the default implementation.
-</summary>
-            <returns>
-The default implementation
-</returns>
-            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
-<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
-This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
-<see cref="F:Lumia.Sense.SenseError.SenseNotAvailable" />, <see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" />, 
-<see cref="F:Lumia.Sense.SenseError.IncompatibleSDK" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" /></exception>
-            <example>
-The following example shows how to get the <see cref="T:Lumia.Sense.ActivityMonitor" />.
-<code lang="C#">
-ActivityMonitor activityMonitor = await ActivityMonitor.GetDefaultAsync();
-</code></example>
-        </member>
-        <member name="M:Lumia.Sense.ActivityMonitor.GetActivityAtAsync(Windows.Foundation.DateTime)">
-            <summary>
-Gets the device activity at given time.
-</summary>
-            <param name="timestamp">Time stamp</param>
-            <returns>Activity at given time</returns>
-            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
-<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
-This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
-<see cref="F:Lumia.Sense.SenseError.InvalidParameter" />, 
-<see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, <see cref="F:Lumia.Sense.SenseError.NotFound" />, 
-<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
-            <remarks>
-The available data extends only up to the last 10 days.
-</remarks>
-            <example>
-The following example shows how to get the <see cref="T:Lumia.Sense.ActivityMonitor" /> and use 
-it to get activity from one hour ago.
-<code lang="C#">
-ActivityMonitor activityMonitor = await ActivityMonitor.GetDefaultAsync();
-ActivityMonitorReading activity = await activityMonitor.GetActivityAtAsync( DateTime.Now.AddHours( -1 ) );
-</code></example>
-        </member>
-        <member name="M:Lumia.Sense.ActivityMonitor.GetActivityHistoryAsync(Windows.Foundation.DateTime,Windows.Foundation.TimeSpan)">
-            <summary>
-Returns time ordered list of activities occured during given time period.
-</summary>
-            <param name="periodFrom">Time period start</param>
-            <param name="span">Time period length</param>
-            <returns>Activity history</returns>
-            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
-<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
-This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
-<see cref="F:Lumia.Sense.SenseError.InvalidParameter" />,  
-<see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, 
-<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
-            <remarks>
-The available data extends only up to the last 10 days.
-<paragraph>The returned list includes all activity monitor readings within the given time pediod.
-If available, the result list begins with the last entry before the beginning of the given period. 
-This enables an application to determine the activity state of the device at the start of the period 
-before the first actual activity event within that period.</paragraph></remarks>
-            <example>
-The following example shows how to get the <see cref="T:Lumia.Sense.ActivityMonitor" /> and use 
-it to get activity history from past 24 hours.
-<code lang="C#">
-ActivityMonitor activityMonitor = await ActivityMonitor.GetDefaultAsync();
-IList&lt;ActivityMonitorReading&gt; activities = await activityMonitor.GetActivityHistoryAsync( DateTime.Now.AddDays( -1 ), TimeSpan.FromDays( 1 ) );
-</code></example>
-        </member>
-        <member name="M:Lumia.Sense.ActivityMonitor.GetCurrentReadingAsync">
-            <summary>
-Gets the current activity
-</summary>
-            <returns>Current activity</returns>
-            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
-<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
-This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
-<see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, 
-<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
-            <remarks>
-The return value may be <c>null</c> in case reading cannot be obtained.
-</remarks>
-            <example>
-The following example shows how to get the <see cref="T:Lumia.Sense.ActivityMonitor" /> and use 
-it to get current activity.
-<code lang="C#">
-ActivityMonitor activityMonitor = await ActivityMonitor.GetDefaultAsync();
-ActivityMonitorReading reading = await activityMonitor.GetCurrentReadingAsync();
-</code></example>
-        </member>
-        <member name="P:Lumia.Sense.ActivityMonitor.Enabled">
-            <summary>
-Enables or disables activity change event monitoring.
-</summary>
-            <remarks>
-                <see cref="E:Lumia.Sense.ActivityMonitor.ReadingChanged" /> events occur only while the property is set to <c>true</c>. However, sensor's 
-current value can be queried via <see cref="M:Lumia.Sense.ActivityMonitor.GetCurrentReadingAsync" /> even when the property is <c>false</c>.
-</remarks>
-        </member>
-        <member name="E:Lumia.Sense.ActivityMonitor.ReadingChanged">
-            <summary>
-Occurs each time activity changes.
-</summary>
-            <remarks>
-An application may register a handler for this event to be notified of activity changes as 
-an alternative to actively polling the values using <see cref="M:Lumia.Sense.ActivityMonitor.GetCurrentReadingAsync" />.
-</remarks>
-            <example>
-The following example shows how to register for running and walking activity events.
-<code lang="C#">
-ActivityMonitor activityMonitor = await ActivityMonitor.GetDefaultAsync();
-activityMonitor.Enabled = true;
-activityMonitor.ReadingChanged += activityMonitor_ReadingChanged;
-</code>
-Here is the handler for activity change events.
-<code lang="C#">
-private void activityMonitor_ReadingChanged( IActivityMonitor source, ActivityMonitorReading value )
-{
-    // Handle activity change event here
-}
-</code></example>
-        </member>
-        <member name="T:Lumia.Sense.ActivityMonitor">
-            <summary>
-Represents an activity state monitor sensor.
-</summary>
-            <remarks>
-This sensor returns the user's activity state values derived from
-various sources of sensor and contextual information within the device.
-</remarks>
-            <example>
-The following example shows how to get the <see cref="T:Lumia.Sense.ActivityMonitor" /> and use 
-it to get current activity.
-<code lang="C#">
-ActivityMonitor activityMonitor = await ActivityMonitor.GetDefaultAsync();
-ActivityMonitorReading reading = await activityMonitor.GetCurrentReadingAsync();
-</code></example>
-        </member>
         <member name="M:HandleStandardErrors(System.Int32!System.Runtime.CompilerServices.IsLong)">
             <summary>
 Handles standard errors received from Sense service. Will throw appropriate exceptions on
@@ -406,9 +287,60 @@ Writes message to log file
             sensitive
 
 </member>
+        <member name="M:Lumia.Sense.IPlaceMonitor.GetPlaceAtAsync(Windows.Foundation.DateTime)">
+            <summary>
+Gets the place at given time.
+</summary>
+            <remarks>
+This method is supported starting from API set 4.
+<paragraph>
+The available data extends only up to the last 10 days. The return value is <c>null</c> in case device 
+was not in known place at the given time or data is requested from before the 10 days or from the future.
+</paragraph></remarks>
+            <param name="timestamp">Time to get the place for</param>
+            <returns>Place at the given time</returns>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
+<see cref="F:Lumia.Sense.SenseError.InvalidParameter" />, 
+<see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, <see cref="F:Lumia.Sense.SenseError.NotFound" />, 
+<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
+            <example>
+The following example shows how to get the <c>PlaceMonitor</c> and use 
+it to get place visited an hour ago.
+<code lang="C#">
+PlaceMonitor placeMonitor = await PlaceMonitor.GetDefaultAsync();
+Place place = await placeMonitor.GetPlaceAtAsync( DateTime.Now.AddHours( -1 ) );
+</code></example>
+        </member>
+        <member name="M:Lumia.Sense.IPlaceMonitor.GetPlaceHistoryAsync(Windows.Foundation.DateTime,Windows.Foundation.TimeSpan)">
+            <summary>
+Returns time ordered list of places visited during given time period.
+</summary>
+            <param name="startTime">Start time</param>
+            <param name="span">Time span</param>
+            <returns>Place history</returns>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
+<see cref="F:Lumia.Sense.SenseError.InvalidParameter" />, <see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, 
+<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
+            <remarks>
+This method is supported starting from API set 4.
+<paragraph>
+The available data extends only up to the last 10 days.
+</paragraph></remarks>
+            <example>
+The following example shows how to get the <c>PlaceMonitor</c> and use 
+it to get place history for the past hour.
+<code lang="C#">
+PlaceMonitor placeMonitor = await PlaceMonitor.GetDefaultAsync();
+IList&lt;Place&gt; places = await placeMonitor.GetPlaceHistoryAsync( DateTime.Now.AddHours( -1 ), TimeSpan.FromHours( 1 ) );
+</code></example>
+        </member>
         <member name="M:Lumia.Sense.IPlaceMonitor.GetKnownPlaceAsync(System.UInt32)">
             <summary>
-Gets place by place id.
+Returns place matching the given place id. This method can be used to return any type of places: home, work, known and frequent.
 </summary>
             <param name="id">Place id</param>
             <returns>
@@ -478,7 +410,7 @@ Place home = await placeMonitor.GetHomeAsync();
         </member>
         <member name="M:Lumia.Sense.IPlaceMonitor.GetKnownPlacesAsync">
             <summary>
-Gets the set of currently known places.
+Gets the set of currently known places. This includes all types of places: home, work, known and frequent.
 </summary>
             <returns>
 The current list of known places.
@@ -511,12 +443,31 @@ from this pre-defined classification of places into concepts and visuals releava
 in the application context.
 </remarks>
             <example>
-The following example shows how to get the <c>PlaceMonitor</c> and use 
-it to get current place.
+The following example shows how to get the PlaceMonitor and use 
+it to get list of known places.
 <code lang="C#">
 PlaceMonitor placeMonitor = await PlaceMonitor.GetDefaultAsync();
-Place place = await placeMonitor.GetCurrentPlaceAsync();
+var places = await placeMonitor.GetKnownPlacesAsync();
 </code></example>
+        </member>
+        <member name="M:Lumia.Sense.Place.#ctor(Lumia.Sense.Place)">
+            <summary>
+Constructor
+</summary>
+            <param name="place">Place</param>
+        </member>
+        <member name="M:Lumia.Sense.Place.#ctor(System.UInt32,Lumia.Sense.PlaceKind,Windows.Devices.Geolocation.BasicGeoposition,System.Double,Windows.Foundation.DateTime,Windows.Foundation.TimeSpan,Windows.Foundation.TimeSpan,System.UInt32)">
+            <summary>
+Constructor
+</summary>
+            <param name="id">Place id</param>
+            <param name="kind">Place kind</param>
+            <param name="position">Place location</param>
+            <param name="radius">Place radius</param>
+            <param name="timestamp">Last visit timestamp</param>
+            <param name="lengthOfStay">Last visit length of stay</param>
+            <param name="totalLengthOfStay">Total length of stay</param>
+            <param name="totalVisitCount">Total visit count</param>
         </member>
         <member name="M:Lumia.Sense.Place.#ctor(System.UInt32,Lumia.Sense.PlaceKind,Windows.Devices.Geolocation.BasicGeoposition,System.Double)">
             <summary>
@@ -531,6 +482,34 @@ Constructor
             <summary>
 Constructor
 </summary>
+        </member>
+        <member name="P:Lumia.Sense.Place.TotalVisitCount">
+            <summary>
+Total number of times the device has visited this place.
+</summary>
+            <remarks>
+This property is supported starting from API set 4.
+</remarks>
+        </member>
+        <member name="P:Lumia.Sense.Place.TotalLengthOfStay">
+            <summary>
+Time how long the device stayed in this location in total.
+</summary>
+            <remarks>
+This property is supported starting from API set 4.
+</remarks>
+        </member>
+        <member name="P:Lumia.Sense.Place.LengthOfStay">
+            <summary>Time how long the device stayed in this location during last visit.</summary>
+            <remarks>
+This property is supported starting from API set 4.
+<paragraph>
+The value is zero if the length could not be determined.
+</paragraph></remarks>
+        </member>
+        <member name="P:Lumia.Sense.Place.Timestamp">
+            <summary> The time when the place has beed entered.</summary>
+            <remarks>This property is supported starting from API set 4.</remarks>
         </member>
         <member name="P:Lumia.Sense.Place.Radius">
             <summary>The radius of the circular area of the place centered at <see cref="P:Lumia.Sense.Place.Position" /> in meters.</summary>
@@ -558,7 +537,11 @@ Indicates the type or kind of a place.
         </member>
         <member name="F:Lumia.Sense.PlaceKind.Frequent">
             <summary>Frequently visited known place.</summary>
-            <remarks>Known place visited at least three times. Time between two consecutive visits at least 6 hours.</remarks>
+            <remarks>
+This place type is supported starting from API set 2.
+<paragraph>
+Known place visited at least three times. Time between two consecutive visits at least 6 hours.
+</paragraph></remarks>
         </member>
         <member name="F:Lumia.Sense.PlaceKind.Known">
             <summary>Other known place.</summary>
@@ -575,8 +558,9 @@ Indicates the type or kind of a place.
 Gets the step count at given time.
 </summary>
             <remarks>
-The available data extends only up to the last 10 days. When current time is used as timestamp reading from <see cref="M:Lumia.Sense.IStepCounter.GetCurrentReadingAsync" /> 
-is returned.
+The available data extends only up to the last 10 days. When current time is used as timestamp reading from
+<see cref="M:Lumia.Sense.IStepCounter.GetCurrentReadingAsync" /> is returned. <see cref="T:Platform.COMException" /> with <see cref="F:Lumia.Sense.SenseError.InvalidParameter" /> is returned if data 
+is requested from more than 10 days ago.
 </remarks>
             <param name="timestamp">time to get the step count for</param>
             <returns>Step count at the given time. Returns <c>null</c> if no step count is available for the given time.</returns>
@@ -777,6 +761,228 @@ Gets the number of walking steps taken since the motion data was enabled.
 Represents a reading of the <c>StepCounter</c>.
 </summary>
         </member>
+        <member name="M:Lumia.Sense.IAltitudeMeter.GetCurrentReadingAsync">
+            <summary>
+Gets the current altitude reading.
+</summary>
+            <returns>
+The current altitude reading of the sensor.
+</returns>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
+<see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, 
+<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
+            <remarks>
+The return value may be null in case reading cannot be obtained currently.
+</remarks>
+            <example>
+The following example shows how to get the <c>AltitudeMeter</c> and use 
+it to get current altitude.
+<code lang="C#">
+AltitudeMeter altitudeMeter = await AltitudeMeter.GetDefaultAsync();
+AltitudeMeterReading reading = await altitudeMeter.GetCurrentReadingAsync();
+</code></example>
+        </member>
+        <member name="T:Lumia.Sense.IAltitudeMeter">
+            <summary>Represents an altitude meter.</summary>
+            <remarks>
+This sensor returns the device's altitude information. The altitude reading is based on 
+information provided by the barometer hardware and the altitude meter is only supported
+in devices with barometer support.
+</remarks>
+        </member>
+        <member name="M:Lumia.Sense.AltitudeMeterReading.#ctor(System.Double,System.Double,System.Double,System.Double,Windows.Foundation.DateTime)">
+            <summary>
+Constructor
+</summary>
+            <param name="absoluteAltitude">Absolute altitude</param>
+            <param name="relativeAltitude">Relative altitude</param>
+            <param name="uncertainty">Uncertainty</param>
+            <param name="airPressure">Air pressure in kPa</param>
+            <param name="timestamp">Time stamp</param>
+        </member>
+        <member name="M:Lumia.Sense.AltitudeMeterReading.#ctor">
+            <summary>
+Constructor
+</summary>
+        </member>
+        <member name="P:Lumia.Sense.AltitudeMeterReading.Timestamp">
+            <summary>
+Gets the time at which the sensor reported the reading.
+</summary>
+        </member>
+        <member name="P:Lumia.Sense.AltitudeMeterReading.AirPressure">
+            <summary>
+Gets the air pressure in kilopascal (kPa).
+</summary>
+        </member>
+        <member name="P:Lumia.Sense.AltitudeMeterReading.Uncertainty">
+            <summary> 
+Altitude uncertainty in meters
+</summary>
+        </member>
+        <member name="P:Lumia.Sense.AltitudeMeterReading.RelativeAltitude">
+            <summary>
+Gets the relative altitude in meters.
+</summary>
+            <remarks>
+Relative value depends only on the current air pressure value. This means 
+that the primary use of this value is to compare consecutive values to find 
+out a relative altitude change over a short period of time during which the 
+air pressure is not expected to change significantly. The advantage of this 
+value is that it is available also when reference information required to 
+calculate the altitude relative to sea level is not available.
+</remarks>
+        </member>
+        <member name="P:Lumia.Sense.AltitudeMeterReading.AbsoluteAltitude">
+            <summary>
+Gets the absolute altitude in meters.
+</summary>
+            <remarks>
+The information required to adjust the altitude relative to the sea level
+may not be available at all times. If absolute altitude is not available
+<c>AbsoluteAltitude</c> will be set to <c>NAN</c>. 
+</remarks>
+        </member>
+        <member name="T:Lumia.Sense.AltitudeMeterReading">
+            <summary>
+Represents a reading of the <c>AltitudeMeter</c>.
+</summary>
+        </member>
+        <member name="M:Lumia.Sense.ITrackPointMonitor.GetPointAtAsync(Windows.Foundation.DateTime)">
+            <summary>
+Returns a collected track point from the given time.
+</summary>
+            <param name="timestamp">Time stamp</param>
+            <returns>Track point at the given time</returns>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
+<see cref="F:Lumia.Sense.SenseError.InvalidParameter" />, 
+<see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, <see cref="F:Lumia.Sense.SenseError.NotFound" />, 
+<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
+            <remarks>
+The available data extends only up to last 10 days. The return value is <c>null</c> in case track point is not available for the given time
+or data is requested from before the 10 days or from the future.
+</remarks>
+            <example>
+The following example shows how to get the <c>TrackPointMonitor</c> and fetch a track
+point from one hour ago.
+<code lang="C#">
+TrackPointMonitor trackPointMonitor = await TrackPointMonitor.GetDefaultAsync();
+TrackPoint trackPoint = await trackPointMonitor.GetPointAtAsync( DateTime.Now.AddHours( -1 ) );
+</code></example>
+        </member>
+        <member name="M:Lumia.Sense.ITrackPointMonitor.GetTrackPointsAsync(Windows.Foundation.DateTime,Windows.Foundation.TimeSpan)">
+            <summary>
+Returns collected track points for the given time period.
+</summary>
+            <param name="periodFrom">Start time</param>
+            <param name="span">Time span</param>
+            <returns>Track points for the given time period</returns>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
+<see cref="F:Lumia.Sense.SenseError.InvalidParameter" />,  
+<see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, 
+<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
+            <remarks>
+The available track data extends only up to last 10 days.
+</remarks>
+            <example>
+The following example shows how to get the <c>TrackPointMonitor</c> and fetch a track point
+history from one hour ago to now.
+<code lang="C#">
+TrackPointMonitor trackPointMonitor = await TrackPointMonitor.GetDefaultAsync();
+IList&lt;TrackPoint&gt; trackPoints = await trackPointMonitor.GetTrackPointsAsync( DateTime.Now.AddHours( -1 ), TimeSpan.FromHours( 1 ) );
+</code></example>
+        </member>
+        <member name="T:Lumia.Sense.ITrackPointMonitor">
+            <summary>
+Represents a monitor that identifies and maintains a list of geographic places
+visited by the device.
+</summary>
+            <remarks>
+Track points are collected passively, i.e. it won't actively track user's location with GPS,
+accuracy of track points reflects the used positioning technology.
+</remarks>
+            <example>
+The following example shows how to get the <c>TrackPointMonitor</c> and fetch a track
+point from one hour ago.
+<code lang="C#">
+TrackPointMonitor trackPointMonitor = await TrackPointMonitor.GetDefaultAsync();
+TrackPoint trackPoint = await trackPointMonitor.GetPointAtAsync( DateTime.Now.AddHours( -1 ) );
+</code></example>
+        </member>
+        <member name="M:Lumia.Sense.TrackPoint.#ctor(Lumia.Sense.TrackPoint)">
+            <summary>
+Constructor
+</summary>
+            <param name="trackPoint">Track point</param>
+        </member>
+        <member name="M:Lumia.Sense.TrackPoint.#ctor(System.UInt32,Windows.Devices.Geolocation.BasicGeoposition,System.Double,Windows.Foundation.TimeSpan,Windows.Foundation.DateTime)">
+            <summary>
+Overloaded Constructor
+</summary>
+            <param name="id">Place Id</param>
+            <param name="position">Position</param>
+            <param name="radius">Radius</param>
+            <param name="lengthOfStay">Length of stay</param>
+            <param name="timestamp">Time stamp</param>
+        </member>
+        <member name="M:Lumia.Sense.TrackPoint.#ctor(Windows.Devices.Geolocation.BasicGeoposition,System.Double,Windows.Foundation.TimeSpan,Windows.Foundation.DateTime)">
+            <summary>
+Constructor
+</summary>
+            <param name="position">Position</param>
+            <param name="radius">Radius</param>
+            <param name="lengthOfStay">Length of stay</param>
+            <param name="timestamp">Time stamp</param>
+        </member>
+        <member name="M:Lumia.Sense.TrackPoint.#ctor">
+            <summary>
+Constructor
+</summary>
+        </member>
+        <member name="P:Lumia.Sense.TrackPoint.Radius">
+            <summary>The estimated radius of a circular area around the location  
+which reflects the used positioning technology.</summary>
+            <remarks>The value is NAN if the radius could not be determined.</remarks>
+        </member>
+        <member name="P:Lumia.Sense.TrackPoint.LengthOfStay">
+            <summary>Time how long the device stayed at this point.</summary>
+            <remarks>The value is zero if the length of stay in the location could not be
+determined.</remarks>
+        </member>
+        <member name="P:Lumia.Sense.TrackPoint.Timestamp">
+            <summary>Time of entry to the location.</summary>
+        </member>
+        <member name="P:Lumia.Sense.TrackPoint.Position">
+            <summary>Geographic position of the track point.</summary>
+            <remarks>The Altitude field is <c>NAN</c> if the altitude could not be determined.</remarks>
+        </member>
+        <member name="P:Lumia.Sense.TrackPoint.Id">
+            <summary>Unique identifier of the place.</summary>
+            <remarks>
+This property is supported starting from API set 2.
+<paragraph>
+Zero if no place identifier available for the track point. Use <c>PlaceMonitor::GetKnownPlaceAsync()</c> to get details about the place. 
+</paragraph></remarks>
+        </member>
+        <member name="T:Lumia.Sense.TrackPoint">
+            <summary>
+Represents a point within a route the device has been located in.
+</summary>
+        </member>
+        <member name="D:Lumia.Sense.PlaceId">
+            <summary>
+Place id type definition.
+</summary>
+            <summary>
+Place id type definition.
+</summary>
+        </member>
         <member name="M:Lumia.Sense.IActivityMonitor.GetActivityAtAsync(Windows.Foundation.DateTime)">
             <summary>
 Gets the device activity at given time.
@@ -790,7 +996,8 @@ This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enu
 <see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, <see cref="F:Lumia.Sense.SenseError.NotFound" />, 
 <see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
             <remarks>
-The available data extends only up to the last 10 days.
+The available data extends only up to the last 10 days. <see cref="T:Platform.COMException" /> with <see cref="F:Lumia.Sense.SenseError.InvalidParameter" /> is returned if data 
+is requested from more than 10 days ago or from the future.
 </remarks>
             <example>
 The following example shows how to get the <c>ActivityMonitor</c> and use 
@@ -945,6 +1152,30 @@ information with activity detection notifications.
 Enumeration representing different activity classes
 </summary>
         </member>
+        <member name="F:Lumia.Sense.Activity.MovingInVehicle">
+            <summary>
+Moving in vehicle
+</summary>
+            <remarks>
+This activity class is supported starting from API set 3.
+<paragraph>
+In-vehicle activity recognition quality will be improved if both location is enabled in system settings and 
+detailed data collection is enabled in Motion data settings. You can use SenseHelper.GetSettingsAsync() to query 
+state of those settings.
+</paragraph></remarks>
+        </member>
+        <member name="F:Lumia.Sense.Activity.Biking">
+            <summary>
+Biking
+</summary>
+            <remarks>
+This activity class is supported starting from API set 3.
+<paragraph>
+Even if biking activity class is supported by the device, in order for it to get recognized both location must be 
+enabled in system settings and detailed data collection must be enabled in Motion data settings. You can use
+SenseHelper.GetSettingsAsync() to query state of those settings.
+</paragraph></remarks>
+        </member>
         <member name="F:Lumia.Sense.Activity.Running">
             <summary>
 Running
@@ -972,225 +1203,11 @@ Idle
 </summary>
             <remarks>Device is laying still</remarks>
         </member>
-        <member name="M:Lumia.Sense.IAltitudeMeter.GetCurrentReadingAsync">
+        <member name="F:Lumia.Sense.Activity.Unknown">
             <summary>
-Gets the current altitude reading.
+Unknown
 </summary>
-            <returns>
-The current altitude reading of the sensor.
-</returns>
-            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
-<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
-This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
-<see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, 
-<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
-            <remarks>
-The return value may be null in case reading cannot be obtained currently.
-</remarks>
-            <example>
-The following example shows how to get the <c>AltitudeMeter</c> and use 
-it to get current altitude.
-<code lang="C#">
-AltitudeMeter altitudeMeter = await AltitudeMeter.GetDefaultAsync();
-AltitudeMeterReading reading = await altitudeMeter.GetCurrentReadingAsync();
-</code></example>
-        </member>
-        <member name="T:Lumia.Sense.IAltitudeMeter">
-            <summary>Represents an altitude meter.</summary>
-            <remarks>
-This sensor returns the device's altitude information. The altitude reading is based on 
-information provided by the barometer hardware and the altitude meter is only supported
-in devices with barometer support.
-</remarks>
-        </member>
-        <member name="M:Lumia.Sense.AltitudeMeterReading.#ctor(System.Double,System.Double,System.Double,System.Double,Windows.Foundation.DateTime)">
-            <summary>
-Constructor
-</summary>
-            <param name="absoluteAltitude">Absolute altitude</param>
-            <param name="relativeAltitude">Relative altitude</param>
-            <param name="uncertainty">Uncertainty</param>
-            <param name="airPressure">Air pressure in kPa</param>
-            <param name="timestamp">Time stamp</param>
-        </member>
-        <member name="M:Lumia.Sense.AltitudeMeterReading.#ctor">
-            <summary>
-Constructor
-</summary>
-        </member>
-        <member name="P:Lumia.Sense.AltitudeMeterReading.Timestamp">
-            <summary>
-Gets the time at which the sensor reported the reading.
-</summary>
-        </member>
-        <member name="P:Lumia.Sense.AltitudeMeterReading.AirPressure">
-            <summary>
-Gets the air pressure in kilopascal (kPa).
-</summary>
-        </member>
-        <member name="P:Lumia.Sense.AltitudeMeterReading.Uncertainty">
-            <summary> 
-Altitude uncertainty in meters
-</summary>
-        </member>
-        <member name="P:Lumia.Sense.AltitudeMeterReading.RelativeAltitude">
-            <summary>
-Gets the relative altitude in meters.
-</summary>
-            <remarks>
-Relative value depends only on the current air pressure value. This means 
-that the primary use of this value is to compare consecutive values to find 
-out a relative altitude change over a short period of time during which the 
-air pressure is not expected to change significantly. The advantage of this 
-value is that it is available also when reference information required to 
-calculate the altitude relative to sea level is not available.
-</remarks>
-        </member>
-        <member name="P:Lumia.Sense.AltitudeMeterReading.AbsoluteAltitude">
-            <summary>
-Gets the absolute altitude in meters.
-</summary>
-            <remarks>
-The information required to adjust the altitude relative to the sea level
-may not be available at all times. If absolute altitude is not available
-<c>AbsoluteAltitude</c> will be set to <c>NAN</c>. 
-</remarks>
-        </member>
-        <member name="T:Lumia.Sense.AltitudeMeterReading">
-            <summary>
-Represents a reading of the <c>AltitudeMeter</c>.
-</summary>
-        </member>
-        <member name="M:Lumia.Sense.ITrackPointMonitor.GetPointAtAsync(Windows.Foundation.DateTime)">
-            <summary>
-Returns a collected track point from the given time.
-</summary>
-            <param name="timestamp">Time stamp</param>
-            <returns>Track point at the given time</returns>
-            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
-<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
-This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
-<see cref="F:Lumia.Sense.SenseError.InvalidParameter" />, 
-<see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, <see cref="F:Lumia.Sense.SenseError.NotFound" />, 
-<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
-            <remarks>
-The available data extends only up to last 10 days. The return value 
-is <c>null</c> in case track point is not available for the given time.
-</remarks>
-            <example>
-The following example shows how to get the <c>TrackPointMonitor</c> and fetch a track
-point from one hour ago.
-<code lang="C#">
-TrackPointMonitor trackPointMonitor = await TrackPointMonitor.GetDefaultAsync();
-TrackPoint trackPoint = await trackPointMonitor.GetPointAtAsync( DateTime.Now.AddHours( -1 ) );
-</code></example>
-        </member>
-        <member name="M:Lumia.Sense.ITrackPointMonitor.GetTrackPointsAsync(Windows.Foundation.DateTime,Windows.Foundation.TimeSpan)">
-            <summary>
-Returns collected track points for the given time period.
-</summary>
-            <param name="periodFrom">Start time</param>
-            <param name="span">Time span</param>
-            <returns>Track points for the given time period</returns>
-            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
-<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
-This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
-<see cref="F:Lumia.Sense.SenseError.InvalidParameter" />,  
-<see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, 
-<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
-            <remarks>
-The available track data extends only up to last 10 days.
-</remarks>
-            <example>
-The following example shows how to get the <c>TrackPointMonitor</c> and fetch a track point
-history from one hour ago to now.
-<code lang="C#">
-TrackPointMonitor trackPointMonitor = await TrackPointMonitor.GetDefaultAsync();
-IList&lt;TrackPoint&gt; trackPoints = await trackPointMonitor.GetTrackPointsAsync( DateTime.Now.AddHours( -1 ), TimeSpan.FromHours( 1 ) );
-</code></example>
-        </member>
-        <member name="T:Lumia.Sense.ITrackPointMonitor">
-            <summary>
-Represents a monitor that identifies and maintains a list of geographic places
-visited by the device.
-</summary>
-            <remarks>
-Track points are collected passively, i.e. it won't actively track user's location with GPS,
-accuracy of track points reflects the used positioning technology.
-</remarks>
-            <example>
-The following example shows how to get the <c>TrackPointMonitor</c> and fetch a track
-point from one hour ago.
-<code lang="C#">
-TrackPointMonitor trackPointMonitor = await TrackPointMonitor.GetDefaultAsync();
-TrackPoint trackPoint = await trackPointMonitor.GetPointAtAsync( DateTime.Now.AddHours( -1 ) );
-</code></example>
-        </member>
-        <member name="M:Lumia.Sense.TrackPoint.#ctor(Lumia.Sense.TrackPoint)">
-            <summary>
-Constructor
-</summary>
-            <param name="trackPoint">Track point</param>
-        </member>
-        <member name="M:Lumia.Sense.TrackPoint.#ctor(System.UInt32,Windows.Devices.Geolocation.BasicGeoposition,System.Double,Windows.Foundation.TimeSpan,Windows.Foundation.DateTime)">
-            <summary>
-Overloaded Constructor
-</summary>
-            <param name="id">Place Id</param>
-            <param name="position">Position</param>
-            <param name="radius">Radius</param>
-            <param name="lengthOfStay">Length of stay</param>
-            <param name="timestamp">Time stamp</param>
-        </member>
-        <member name="M:Lumia.Sense.TrackPoint.#ctor(Windows.Devices.Geolocation.BasicGeoposition,System.Double,Windows.Foundation.TimeSpan,Windows.Foundation.DateTime)">
-            <summary>
-Constructor
-</summary>
-            <param name="position">Position</param>
-            <param name="radius">Radius</param>
-            <param name="lengthOfStay">Length of stay</param>
-            <param name="timestamp">Time stamp</param>
-        </member>
-        <member name="M:Lumia.Sense.TrackPoint.#ctor">
-            <summary>
-Constructor
-</summary>
-        </member>
-        <member name="P:Lumia.Sense.TrackPoint.Radius">
-            <summary>The estimated radius of a circular area around the location  
-which reflects the used positioning technology.</summary>
-            <remarks>The value is NAN if the radius could not be determined.</remarks>
-        </member>
-        <member name="P:Lumia.Sense.TrackPoint.LengthOfStay">
-            <summary>Time how long the device stayed at this point.</summary>
-            <remarks>The value is zero if the length of stay in the location could not be
-determined.</remarks>
-        </member>
-        <member name="P:Lumia.Sense.TrackPoint.Timestamp">
-            <summary>Time of entry to the location.</summary>
-        </member>
-        <member name="P:Lumia.Sense.TrackPoint.Position">
-            <summary>Geographic position of the track point.</summary>
-            <remarks>The Altitude field is <c>NAN</c> if the altitude could not be determined.</remarks>
-        </member>
-        <member name="P:Lumia.Sense.TrackPoint.Id">
-            <summary>Unique identifier of the place.</summary>
-            <remarks>
-Zero if no place identifier available for the track point. Use <c>PlaceMonitor::GetKnownPlaceAsync()</c> to get details about the place. 
-</remarks>
-        </member>
-        <member name="T:Lumia.Sense.TrackPoint">
-            <summary>
-Represents a point within a route the device has been located in.
-</summary>
-        </member>
-        <member name="D:Lumia.Sense.PlaceId">
-            <summary>
-Place id type definition.
-</summary>
-            <summary>
-Place id type definition.
-</summary>
+            <remarks>Activity could not be determined (e.g. device is swithced off)</remarks>
         </member>
         <member name="F:Lumia.Sense.SenseHelper.m_supportedCapabilities">
             <summary>Cached supported capabilities</summary>
@@ -1208,17 +1225,20 @@ Returns Sense API version information
             <param name="versionInfo">Upon success will contain version info</param>
             <returns>Return code</returns>
         </member>
-        <member name="M:Lumia.Sense.SenseHelper.DoGetApiState(Lumia.Sense.ApiState)">
-            <summary>
-Returns Sense and Location API state
-</summary>
-            <param name="state">Upon success will contain the API state</param>
-            <returns>Return code</returns>
-        </member>
         <member name="M:Lumia.Sense.SenseHelper.#ctor">
             <summary>
 Constructor
 </summary>
+        </member>
+        <member name="M:Lumia.Sense.SenseHelper.GetSupportedApiSet">
+            <summary>
+Returns the API set supported by the device
+</summary>
+            <returns>API set supported by the device</returns>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
+<see cref="F:Lumia.Sense.SenseError.GeneralFailure" /></exception>
         </member>
         <member name="M:Lumia.Sense.SenseHelper.GetSupportedCapabilities">
             <summary>
@@ -1229,6 +1249,9 @@ Returns the supported capabilities
 <see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
 This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
 <see cref="F:Lumia.Sense.SenseError.GeneralFailure" /></exception>
+            <remarks>
+This API has been deprecated. You should use <c>GetSupportedApiSetAsync</c> method to determine available features instead.
+</remarks>
         </member>
         <member name="M:Lumia.Sense.SenseHelper.IsSupportedAsync(Lumia.Sense.SensorType)">
             <summary>
@@ -1255,6 +1278,73 @@ Returns Sense API version information
 This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
 <see cref="F:Lumia.Sense.SenseError.GeneralFailure" /></exception>
         </member>
+        <member name="M:Lumia.Sense.SenseHelper.GetSettingsAsync">
+            <summary>
+Returns Motion data settings
+</summary>
+            <returns>Motion data settings</returns>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
+<see cref="F:Lumia.Sense.SenseError.GeneralFailure" /></exception>
+        </member>
+        <member name="M:Lumia.Sense.SenseHelper.GetSupportedApiSetAsync">
+            <summary>
+Returns the API set supported by the device
+</summary>
+            <returns>API set supported by the device</returns>
+            <remarks>
+                <list type="table">
+                    <listheader>
+                        <term>API set</term>
+                        <description>Description</description>
+                    </listheader>
+                    <item>
+                        <term>1</term>
+                        <description>Baseline covering everything else not listed under the other API set levels.</description>
+                    </item>
+                    <item>
+                        <term>2</term>
+                        <description>
+                            <list type="bullet">
+                                <item>
+                                    <c>PlaceMonitor.PlaceKind</c> has new value: <c>Frequent</c></item>
+                                <item>
+                                    <c>TrackPoint</c> has new property: <c>Id</c></item>
+                                <item>Added triggers
+          <list type="bullet"><item><c>StepCounterUpdate</c></item><item><c>MotionDataCleared</c>: This trigger will also be supported if supported API set is 1 but Motion data version is 2.</item><item><c>SenseApiStateChanged</c>: This trigger will also be supported if supported API set is 1 but Motion data version is 2.</item></list></item>
+                            </list>
+                        </description>
+                    </item>
+                    <item>
+                        <term>3</term>
+                        <description>
+                            <list type="bullet">
+                                <item>New activity classes
+          <list type="bullet"><item><c>Biking</c></item><item><c>MovingInVehicle</c></item></list></item>
+                                <item>
+                                    <c>DataCollectionQuality</c> can have value <c>Detailed</c> if set in Motion data 2.x settings</item>
+                            </list>
+                        </description>
+                    </item>
+                    <item>
+                        <term>4</term>
+                        <description>
+                            <list type="bullet">
+                                <item>
+                                    <c>PlaceMonitor.Place</c> has new properties
+          <list type="bullet"><item><c>Timestamp</c></item><item><c>LengthOfStay</c></item><item><c>TotalLengthOfStay</c></item><item><c>TotalVisitCount</c></item></list></item>
+                                <item>New methods available in <c>PlaceMonitor</c><list type="bullet"><item><c>GetPlaceHistoryAsync</c></item><item><c>GetPlaceAtAsync</c></item></list></item>
+                            </list>
+                        </description>
+                    </item>
+                </list>
+            </remarks>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
+<see cref="F:Lumia.Sense.SenseError.GeneralFailure" /></exception>
+        </member>
         <member name="M:Lumia.Sense.SenseHelper.GetSupportedCapabilitiesAsync">
             <summary>
 Returns the supported capabilities
@@ -1264,6 +1354,9 @@ Returns the supported capabilities
 <see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
 This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
 <see cref="F:Lumia.Sense.SenseError.GeneralFailure" /></exception>
+            <remarks>
+This API has been deprecated. You should use <c>GetSupportedApiSetAsync</c> method to determine available features instead.
+</remarks>
         </member>
         <member name="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)">
             <summary>
@@ -1290,19 +1383,26 @@ An alternative way of doing this is to utilize the "sensesettings:" URI launch s
 <code>await Windows.System.Launcher.LaunchUriAsync(new Uri("sensesettings:"));</code></remarks>
             <returns>true if settings was launched, false otherwise</returns>
         </member>
-        <member name="M:Lumia.Sense.SenseHelper.GetApiStateAsync">
-            <summary>
-Returns Sense and Location API state
-</summary>
-            <returns>Object containing Sense and Location API state</returns>
-            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
-<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
-This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
-<see cref="F:Lumia.Sense.SenseError.GeneralFailure" /></exception>
-        </member>
         <member name="T:Lumia.Sense.SenseHelper">
             <summary>
 Helper class providing miscellaneous Sense helper methods
+</summary>
+        </member>
+        <member name="P:Lumia.Sense.ApiSupportedCapabilities.ServiceApiVersion">
+            <summary>Sense service API version</summary>
+        </member>
+        <member name="P:Lumia.Sense.ApiSupportedCapabilities.GeoPlatformV3">
+            <summary>
+                <c>true</c> if the Geo platform version 3 features are supported, <c>false</c> otherwise.</summary>
+        </member>
+        <member name="P:Lumia.Sense.ApiSupportedCapabilities.ActivityClassInVehicle">
+            <summary>
+                <c>true</c> if device supports in-vehicle activity class, <c>false</c> otherwise.
+</summary>
+        </member>
+        <member name="P:Lumia.Sense.ApiSupportedCapabilities.ActivityClassBicycle">
+            <summary>
+                <c>true</c> if device supports bicycle activity class, <c>false</c> otherwise.
 </summary>
         </member>
         <member name="P:Lumia.Sense.ApiSupportedCapabilities.GeoPlatformV2">
@@ -1331,27 +1431,34 @@ Constructor
             <summary>
                 <c>true</c> if motion data settings triggers are supported, <c>false</c> otherwise.</summary>
             <remarks>
+This API has been deprecated. You should use <c>GetSupportedApiSetAsync</c> method to determine available features instead.
+<paragraph>
 Triggers for motion data clearing and motion data and location state changes.
-</remarks>
+</paragraph></remarks>
         </member>
         <member name="P:Lumia.Sense.ApiSupportedCapabilities.AltitudeTrigger">
             <summary>
-                <c>true</c> if altitude meter trigger is supported, <c>false</c> otherwise.</summary>
+                <c>true</c> if altitude meter trigger is supported, <c>false</c> otherwise.
+</summary>
+            <remarks>
+This API has been deprecated. You should use <c>GetSupportedApiSet</c> method to determine available features instead.
+</remarks>
         </member>
         <member name="P:Lumia.Sense.ApiSupportedCapabilities.StepCounterTrigger">
             <summary>
-                <c>true</c> if step counter trigger is supported, <c>false</c> otherwise.</summary>
+                <c>true</c> if step counter trigger is supported, <c>false</c> otherwise.
+</summary>
+            <remarks>
+This API has been deprecated. You should use <c>GetSupportedApiSetAsync</c> method to determine available features instead.
+</remarks>
         </member>
         <member name="T:Lumia.Sense.ApiSupportedCapabilities">
             <summary>
 Supported capabilities info
 </summary>
-        </member>
-        <member name="P:Lumia.Sense.ApiVersionInfo.ServiceVersion">
-            <summary>Service version.</summary>
-        </member>
-        <member name="P:Lumia.Sense.ApiVersionInfo.ServiceApiVersion">
-            <summary>Service API version.</summary>
+            <remarks>
+This API has been deprecated. You should use <c>GetSupportedApiSetAsync</c> method to determine available features instead.
+</remarks>
         </member>
         <member name="M:Lumia.Sense.ApiVersionInfo.#ctor">
             <summary>
@@ -1365,37 +1472,65 @@ Constructor
             <param name="version">Service API version.</param>
             <param name="serviceVersion">Service version.</param>
         </member>
+        <member name="P:Lumia.Sense.ApiVersionInfo.ServiceVersion">
+            <summary>Service version.</summary>
+        </member>
+        <member name="P:Lumia.Sense.ApiVersionInfo.ServiceApiVersion">
+            <summary>Service API version.</summary>
+        </member>
         <member name="T:Lumia.Sense.ApiVersionInfo">
             <summary>
 Sense API version info
 </summary>
         </member>
-        <member name="M:Lumia.Sense.ApiState.#ctor">
+        <member name="M:Lumia.Sense.MotionDataSettings.#ctor">
             <summary>
 Constructor
 </summary>
         </member>
-        <member name="M:Lumia.Sense.ApiState.#ctor(System.Boolean,System.Boolean)">
+        <member name="P:Lumia.Sense.MotionDataSettings.DataQuality">
             <summary>
-Constructor
+Data collection quality
 </summary>
-            <param name="locationEnabled">
-                <c>true</c> if the location setting of the phone is enabled, <c>false</c> otherwise.</param>
-            <param name="senseEnabled">
-                <c>true</c> if the motion data setting of the phone is enabled, <c>false</c> otherwise.</param>
         </member>
-        <member name="P:Lumia.Sense.ApiState.SenseEnabled">
+        <member name="P:Lumia.Sense.MotionDataSettings.PlacesVisited">
             <summary>
-                <c>true</c> if the motion data setting of the phone is enabled, <c>false</c> otherwise.</summary>
-        </member>
-        <member name="P:Lumia.Sense.ApiState.LocationEnabled">
-            <summary>
-                <c>true</c> if the location setting of the phone is enabled, <c>false</c> otherwise.</summary>
-        </member>
-        <member name="T:Lumia.Sense.ApiState">
-            <summary>
-Sense and location API state
+                <c>true</c> if places visited is enabled in Motion data settings, <c>false</c> otherwise.
 </summary>
+        </member>
+        <member name="P:Lumia.Sense.MotionDataSettings.LocationEnabled">
+            <summary>
+                <c>true</c> if location is enabled in system settings, <c>false</c> otherwise.
+</summary>
+        </member>
+        <member name="P:Lumia.Sense.MotionDataSettings.Version">
+            <summary>
+Motion data settings application version
+</summary>
+            <remarks>
+In version 1 of Motion data settings all sensors required that system location and Motion data settings were enabled.
+In version 2 of Motion data settings Activity monitor and Step counter no longer require any settings to be enabled in order
+to run while Place monitor and Track point monitor continue to work as before.
+</remarks>
+        </member>
+        <member name="T:Lumia.Sense.MotionDataSettings">
+            <summary>
+Motion data settings
+</summary>
+        </member>
+        <member name="T:Lumia.Sense.DataCollectionQuality">
+            <summary>
+Data collection quality settings
+</summary>
+        </member>
+        <member name="F:Lumia.Sense.DataCollectionQuality.Detailed">
+            <summary>Detailed data collection quality</summary>
+            <remarks>
+This setting is supported starting from API set 3.
+</remarks>
+        </member>
+        <member name="F:Lumia.Sense.DataCollectionQuality.Basic">
+            <summary>Basic data collection quality</summary>
         </member>
         <member name="T:Lumia.Sense.SenseError">
             <summary>
@@ -1439,7 +1574,7 @@ Location is disabled by the user from the Location settings
         </member>
         <member name="F:Lumia.Sense.SenseError.SenseDisabled">
             <summary>
-User has disabled motion data collection from the Motion data setttings
+User has disabled motion data collection from the Motion data settings
 </summary>
         </member>
         <member name="F:Lumia.Sense.SenseError.NotFound">
@@ -1461,21 +1596,44 @@ Constructor
             <summary>Called when altitude has changed two meters.</summary>
         </member>
         <member name="P:Lumia.Sense.SenseTrigger.SenseApiStateChanged">
-            <summary>Called when Motion data or location has been switched on or off.</summary>
+            <summary>
+Raised when "Places visited" in Motion data settings or system location setting has been switched on or off.
+</summary>
+            <remarks>
+This trigger is supported starting from API set 2.
+<paragraph>
+In devices running with older version of Motion data settings, turning the "Motion data" setting on or off will also result in 
+this trigger getting raised.
+</paragraph><paragraph>
+Note: This trigger will also be supported if supported API set is 1 but the Motion data version is 2.
+</paragraph></remarks>
         </member>
         <member name="P:Lumia.Sense.SenseTrigger.MotionDataCleared">
-            <summary>Called when motion data is cleared.</summary>
+            <summary>
+Raised when motion data is cleared.
+</summary>
+            <remarks>
+This trigger is supported starting from API set 2.
+<paragraph>
+Note: This trigger will also be supported if supported API set is 1 but the Motion data version is 2.
+</paragraph></remarks>
         </member>
         <member name="P:Lumia.Sense.SenseTrigger.StepCounterUpdate">
             <summary>
-Called when user has moved at least 5 steps and at least 10 minutes have elapsed since last step counter trigger. Also called at 
+Raised when user has moved at least 5 steps and at least 10 minutes have elapsed since last step counter trigger. Also raised at 
 midnight in order for step counter applications to reset their daily statistics.
 </summary>
+            <remarks>
+This trigger is supported starting from API set 2.
+</remarks>
         </member>
         <member name="T:Lumia.Sense.SenseTrigger">
             <summary>
 Sense device manufacturer triggers
 </summary>
+            <remarks>
+These triggers are supported starting from API set 2.
+</remarks>
         </member>
         <member name="M:Lumia.Sense.ISensor.DeactivateAsync">
             <summary>
@@ -1523,85 +1681,6 @@ Indicates the type of the sensor.
         </member>
         <member name="F:Lumia.Sense.SensorType.ActivityMonitor">
             <summary> Activity monitor </summary>
-        </member>
-        <member name="M:Lumia.Sense.AltitudeMeter.#ctor">
-            <summary>
-Constructor
-</summary>
-        </member>
-        <member name="M:Lumia.Sense.AltitudeMeter.IsSupportedAsync">
-            <summary>
-Returns whether the sensor is supported by the device or not.
-</summary>
-            <returns>
-                <c>true</c> if the sensor is supported, <c>false</c> otherwise</returns>
-        </member>
-        <member name="M:Lumia.Sense.AltitudeMeter.DeactivateAsync">
-            <summary>
-Closes the communication channel with underlying sensor. Connection must be closed whenever application
-is put to background.
-</summary>
-            <returns>
-Returns an IAsyncAction object that is used to control the asynchronous operation.
-</returns>
-        </member>
-        <member name="M:Lumia.Sense.AltitudeMeter.ActivateAsync">
-            <summary>
-Re-establishes the communication channel with underlying sensor, if it doesn't already exist.
-Connection needs to be re-established when the application is brought to foreground.
-</summary>
-            <returns>
-Returns an IAsyncAction object that is used to control the asynchronous operation.
-</returns>
-        </member>
-        <member name="P:Lumia.Sense.AltitudeMeter.Type">
-            <summary>
-The sensor type.
-</summary>
-        </member>
-        <member name="M:Lumia.Sense.AltitudeMeter.Dispose">
-            <summary>
-Destructor
-</summary>
-        </member>
-        <member name="M:Lumia.Sense.AltitudeMeter.GetDefaultAsync">
-            <summary>
-Gets the default implementation.
-</summary>
-            <returns>
-The default implementation. Throws exception if sensor is not supported on the device.
-</returns>
-        </member>
-        <member name="M:Lumia.Sense.AltitudeMeter.GetCurrentReadingAsync">
-            <summary>
-Gets the current altitude reading.
-</summary>
-            <returns>
-The current altitude reading of the sensor.
-</returns>
-            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
-<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
-This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
-<see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, 
-<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
-            <remarks>
-The return value may be null in case reading cannot be obtained currently.
-</remarks>
-            <example>
-The following example shows how to get the <c>AltitudeMeter</c> and use 
-it to get current altitude.
-<code lang="C#">
-AltitudeMeter altitudeMeter = await AltitudeMeter.GetDefaultAsync();
-AltitudeMeterReading reading = await altitudeMeter.GetCurrentReadingAsync();
-</code></example>
-        </member>
-        <member name="T:Lumia.Sense.AltitudeMeter">
-            <summary>Represents an altitude meter.</summary>
-            <remarks>
-This sensor returns the device's altitude information. The altitude reading is based on 
-information provided by the barometer hardware and the altitude meter is only supported
-in devices with barometer support.
-</remarks>
         </member>
         <member name="M:Lumia.Sense.StepCounter.#ctor">
             <summary>
@@ -1656,7 +1735,8 @@ Gets the step count at given time.
 </summary>
             <remarks>
 The available data extends only up to the last 10 days. When current time is used as timestamp reading from
-<see cref="M:Lumia.Sense.StepCounter.GetCurrentReadingAsync" /> is returned.
+<see cref="M:Lumia.Sense.StepCounter.GetCurrentReadingAsync" /> is returned. <see cref="T:Platform.COMException" /> with <see cref="F:Lumia.Sense.SenseError.InvalidParameter" /> is returned if data 
+is requested from more than 10 days ago.
 </remarks>
             <param name="timestamp">time to get the step count for</param>
             <returns>Step count at the given time. Returns <c>null</c> if no step count is available for the given time.</returns>
@@ -1783,6 +1863,22 @@ StepCounter stepCounter = await StepCounter.GetDefaultAsync();
 StepCounterReading currentSteps = await stepCounter.GetCurrentReadingAsync();
 </code></example>
         </member>
+        <member name="M:Lumia.Sense.PlaceMonitor.GetKnownPlacesV3">
+            <summary>
+Gets the set of currently known places with geo plaform v3.
+</summary>
+            <returns>
+The current list of known places.
+</returns>
+        </member>
+        <member name="M:Lumia.Sense.PlaceMonitor.GetKnownPlacesV1">
+            <summary>
+Gets the set of currently known places.
+</summary>
+            <returns>
+The current list of known places.
+</returns>
+        </member>
         <member name="M:Lumia.Sense.PlaceMonitor.#ctor">
             <summary>
 Constructor
@@ -1830,9 +1926,60 @@ The sensor type.
 Destructor
 </summary>
         </member>
+        <member name="M:Lumia.Sense.PlaceMonitor.GetPlaceAtAsync(Windows.Foundation.DateTime)">
+            <summary>
+Gets the place at given time.
+</summary>
+            <remarks>
+This method is supported starting from API set 4.
+<paragraph>
+The available data extends only up to the last 10 days. The return value is <c>null</c> in case device 
+was not in known place at the given time or data is requested from before the 10 days or from the future.
+</paragraph></remarks>
+            <param name="timestamp">Time to get the place for</param>
+            <returns>Place at the given time</returns>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
+<see cref="F:Lumia.Sense.SenseError.InvalidParameter" />,  
+<see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, <see cref="F:Lumia.Sense.SenseError.NotFound" />, 
+<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
+            <example>
+The following example shows how to get the <see cref="T:Lumia.Sense.PlaceMonitor" /> and use 
+it to get place visited an hour ago.
+<code lang="C#">
+PlaceMonitor placeMonitor = await PlaceMonitor.GetDefaultAsync();
+Place place = await placeMonitor.GetPlaceAtAsync( DateTime.Now.AddHours( -1 ) );
+</code></example>
+        </member>
+        <member name="M:Lumia.Sense.PlaceMonitor.GetPlaceHistoryAsync(Windows.Foundation.DateTime,Windows.Foundation.TimeSpan)">
+            <summary>
+Returns time ordered list of places visited during given time period.
+</summary>
+            <param name="startTime">Start time</param>
+            <param name="span">Time span</param>
+            <returns>Place history</returns>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
+<see cref="F:Lumia.Sense.SenseError.InvalidParameter" />, <see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, 
+<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
+            <remarks>
+This method is supported starting from API set 4.
+<paragraph>
+The available data extends only up to the last 10 days.
+</paragraph></remarks>
+            <example>
+The following example shows how to get the <see cref="T:Lumia.Sense.PlaceMonitor" /> and use 
+it to get place history for the past hour.
+<code lang="C#">
+PlaceMonitor placeMonitor = await PlaceMonitor.GetDefaultAsync();
+IList&lt;Place&gt; places = await placeMonitor.GetPlaceHistoryAsync( DateTime.Now.AddHours( -1 ), TimeSpan.FromHours( 1 ) );
+</code></example>
+        </member>
         <member name="M:Lumia.Sense.PlaceMonitor.GetKnownPlaceAsync(System.UInt32)">
             <summary>
-Gets place by place id.
+Returns place matching the given place id. This method can be used to return any type of places: home, work, known and frequent.
 </summary>
             <param name="id">Place id</param>
             <returns>
@@ -1902,7 +2049,7 @@ Place home = await placeMonitor.GetHomeAsync();
         </member>
         <member name="M:Lumia.Sense.PlaceMonitor.GetKnownPlacesAsync">
             <summary>
-Gets the set of currently known places.
+Gets the set of currently known places. This includes all types of places: home, work, known and frequent.
 </summary>
             <returns>
 The current list of known places.
@@ -1954,10 +2101,203 @@ in the application context.
 </remarks>
             <example>
 The following example shows how to get the <see cref="T:Lumia.Sense.PlaceMonitor" /> and use 
-it to get current place.
+it to get list of known places.
 <code lang="C#">
 PlaceMonitor placeMonitor = await PlaceMonitor.GetDefaultAsync();
-Place place = await placeMonitor.GetCurrentPlaceAsync();
+var places = await placeMonitor.GetKnownPlacesAsync();
+</code></example>
+        </member>
+        <member name="M:Lumia.Sense.ActivityMonitor.PrepareActivityMonitorReading(HIDMessage.ActivityMonitorReading!System.Runtime.CompilerServices.IsConst*,System.UInt64)">
+            <summary>
+Creates new activity monitor reading based on the given data
+</summary>
+            <param name="reading">activity monitor reading HID message</param>
+            <param name="mask">activity class mask</param>
+            <returns>Activity monitor reading populated with the given data</returns>
+        </member>
+        <member name="M:Lumia.Sense.ActivityMonitor.#ctor">
+            <summary>
+Constructor
+</summary>
+        </member>
+        <member name="M:Lumia.Sense.ActivityMonitor.IsSupportedAsync">
+            <summary>
+Returns whether the sensor is supported by the device or not.
+</summary>
+            <returns>
+                <c>true</c> if the sensor is supported, <c>false</c> otherwise</returns>
+        </member>
+        <member name="M:Lumia.Sense.ActivityMonitor.DeactivateAsync">
+            <summary>
+Closes the communication channel with underlying sensor. Connection must be closed whenever application
+is put to background.
+</summary>
+            <returns>
+Returns an IAsyncAction object that is used to control the asynchronous operation.
+</returns>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: <see cref="F:Lumia.Sense.SenseError.GeneralFailure" /></exception>
+        </member>
+        <member name="M:Lumia.Sense.ActivityMonitor.ActivateAsync">
+            <summary>
+Re-establishes the communication channel with underlying sensor, if it doesn't already exist.
+Connection needs to be re-established when the application is brought to foreground.
+</summary>
+            <returns>
+Returns an IAsyncAction object that is used to control the asynchronous operation.
+</returns>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: <see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, 
+<see cref="F:Lumia.Sense.SenseError.LocationDisabled" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" /></exception>
+        </member>
+        <member name="P:Lumia.Sense.ActivityMonitor.Type">
+            <summary>
+The sensor type.
+</summary>
+        </member>
+        <member name="M:Lumia.Sense.ActivityMonitor.Dispose">
+            <summary>
+Destructor
+</summary>
+        </member>
+        <member name="M:Lumia.Sense.ActivityMonitor.GetDefaultAsync">
+            <summary>
+Gets the default implementation.
+</summary>
+            <returns>
+The default implementation
+</returns>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
+<see cref="F:Lumia.Sense.SenseError.SenseNotAvailable" />, <see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" />, 
+<see cref="F:Lumia.Sense.SenseError.IncompatibleSDK" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" /></exception>
+            <example>
+The following example shows how to get the <see cref="T:Lumia.Sense.ActivityMonitor" />.
+<code lang="C#">
+ActivityMonitor activityMonitor = await ActivityMonitor.GetDefaultAsync();
+</code></example>
+        </member>
+        <member name="M:Lumia.Sense.ActivityMonitor.GetActivityAtAsync(Windows.Foundation.DateTime)">
+            <summary>
+Gets the device activity at given time.
+</summary>
+            <param name="timestamp">Time stamp</param>
+            <returns>Activity at given time</returns>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
+<see cref="F:Lumia.Sense.SenseError.InvalidParameter" />, 
+<see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, <see cref="F:Lumia.Sense.SenseError.NotFound" />, 
+<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
+            <remarks>
+The available data extends only up to the last 10 days. <see cref="T:Platform.COMException" /> with <see cref="F:Lumia.Sense.SenseError.InvalidParameter" /> is returned if data 
+is requested from more than 10 days ago or from the future.
+</remarks>
+            <example>
+The following example shows how to get the <see cref="T:Lumia.Sense.ActivityMonitor" /> and use 
+it to get activity from one hour ago.
+<code lang="C#">
+ActivityMonitor activityMonitor = await ActivityMonitor.GetDefaultAsync();
+ActivityMonitorReading activity = await activityMonitor.GetActivityAtAsync( DateTime.Now.AddHours( -1 ) );
+</code></example>
+        </member>
+        <member name="M:Lumia.Sense.ActivityMonitor.GetActivityHistoryAsync(Windows.Foundation.DateTime,Windows.Foundation.TimeSpan)">
+            <summary>
+Returns time ordered list of activities occured during given time period.
+</summary>
+            <param name="periodFrom">Time period start</param>
+            <param name="span">Time period length</param>
+            <returns>Activity history</returns>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
+<see cref="F:Lumia.Sense.SenseError.InvalidParameter" />,  
+<see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, 
+<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
+            <remarks>
+The available data extends only up to the last 10 days.
+<paragraph>The returned list includes all activity monitor readings within the given time pediod.
+If available, the result list begins with the last entry before the beginning of the given period. 
+This enables an application to determine the activity state of the device at the start of the period 
+before the first actual activity event within that period.</paragraph></remarks>
+            <example>
+The following example shows how to get the <see cref="T:Lumia.Sense.ActivityMonitor" /> and use 
+it to get activity history from past 24 hours.
+<code lang="C#">
+ActivityMonitor activityMonitor = await ActivityMonitor.GetDefaultAsync();
+IList&lt;ActivityMonitorReading&gt; activities = await activityMonitor.GetActivityHistoryAsync( DateTime.Now.AddDays( -1 ), TimeSpan.FromDays( 1 ) );
+</code></example>
+        </member>
+        <member name="M:Lumia.Sense.ActivityMonitor.GetCurrentReadingAsync">
+            <summary>
+Gets the current activity
+</summary>
+            <returns>Current activity</returns>
+            <exception cref="T:Platform.COMException">All errors are thrown as instances of <see cref="T:Platform.COMException" />. To get details about the error pass the
+<see cref="P:Platform.Exception.HResult" /> property of the exception to <see cref="M:Lumia.Sense.SenseHelper.GetSenseError(System.Int32)" />.
+This method can return the following <see cref="T:Lumia.Sense.SenseError" /> enumeration values: 
+<see cref="F:Lumia.Sense.SenseError.SensorDeactivated" />, <see cref="F:Lumia.Sense.SenseError.GeneralFailure" />, 
+<see cref="F:Lumia.Sense.SenseError.SenseDisabled" />, <see cref="F:Lumia.Sense.SenseError.LocationDisabled" /></exception>
+            <remarks>
+The return value may be <c>null</c> in case reading cannot be obtained.
+</remarks>
+            <example>
+The following example shows how to get the <see cref="T:Lumia.Sense.ActivityMonitor" /> and use 
+it to get current activity.
+<code lang="C#">
+ActivityMonitor activityMonitor = await ActivityMonitor.GetDefaultAsync();
+ActivityMonitorReading reading = await activityMonitor.GetCurrentReadingAsync();
+</code></example>
+        </member>
+        <member name="P:Lumia.Sense.ActivityMonitor.Enabled">
+            <summary>
+Enables or disables activity change event monitoring.
+</summary>
+            <remarks>
+                <see cref="E:Lumia.Sense.ActivityMonitor.ReadingChanged" /> events occur only while the property is set to <c>true</c>. However, sensor's 
+current value can be queried via <see cref="M:Lumia.Sense.ActivityMonitor.GetCurrentReadingAsync" /> even when the property is <c>false</c>.
+</remarks>
+        </member>
+        <member name="E:Lumia.Sense.ActivityMonitor.ReadingChanged">
+            <summary>
+Occurs each time activity changes.
+</summary>
+            <remarks>
+An application may register a handler for this event to be notified of activity changes as 
+an alternative to actively polling the values using <see cref="M:Lumia.Sense.ActivityMonitor.GetCurrentReadingAsync" />.
+</remarks>
+            <example>
+The following example shows how to register for running and walking activity events.
+<code lang="C#">
+ActivityMonitor activityMonitor = await ActivityMonitor.GetDefaultAsync();
+activityMonitor.Enabled = true;
+activityMonitor.ReadingChanged += activityMonitor_ReadingChanged;
+</code>
+Here is the handler for activity change events.
+<code lang="C#">
+private void activityMonitor_ReadingChanged( IActivityMonitor source, ActivityMonitorReading value )
+{
+    // Handle activity change event here
+}
+</code></example>
+        </member>
+        <member name="T:Lumia.Sense.ActivityMonitor">
+            <summary>
+Represents an activity state monitor sensor.
+</summary>
+            <remarks>
+This sensor returns the user's activity state values derived from
+various sources of sensor and contextual information within the device.
+</remarks>
+            <example>
+The following example shows how to get the <see cref="T:Lumia.Sense.ActivityMonitor" /> and use 
+it to get current activity.
+<code lang="C#">
+ActivityMonitor activityMonitor = await ActivityMonitor.GetDefaultAsync();
+ActivityMonitorReading reading = await activityMonitor.GetCurrentReadingAsync();
 </code></example>
         </member>
     </members>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Steppy.BusinessLayer.Models;
 
 namespace Steppy.BusinessLayer.Helpers
 {
@@ -60,6 +61,17 @@ namespace Steppy.BusinessLayer.Helpers
 	        0xFF87CEFA,0xFFB0C4DE,0xFF76608A,0xFF7B68EE,0xFF4169E1,0xFF6A5ACD,
 	        0xFF708090,0xFF4682B4,0xFF008080,0xFF40E0D0,0xFFA9A9A9,0xFFD3D3D3
         };
+
+        private static readonly string[] FlatColors =
+        {
+            "#1abc9c", "#9b59b6", "#34495e", "#27ae60", "#95a5a6", "#f1c40f", "#c0392b",
+            "#d35400", "#2980b9"
+        };
+
+        public static List<ThemeOption> GetFlatThemes()
+        {
+            return FlatColors.Select(s => new ThemeOption(s)).ToList();
+        }
 
         public static List<Color> GetBaseColorSelection()
         {

@@ -8,3 +8,12 @@ C:\Users\Filip\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\
 C:\Users\Filip\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\obj\ARM\Debug\Steppy.BusinessLayer.csprojResolveAssemblyReference.cache
 C:\Users\Filip\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\obj\ARM\Debug\Steppy.BusinessLayer.dll
 C:\Users\Filip\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\obj\ARM\Debug\Steppy.BusinessLayer.pdb
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\ARM\Debug\Steppy.BusinessLayer.dll
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\ARM\Debug\Steppy.BusinessLayer.pdb
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\ARM\Debug\Lumia.Sense.winmd
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\ARM\Debug\Lumia.Internal.HMBClient.winmd
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\ARM\Debug\Lumia.Sense.dll
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\ARM\Debug\Lumia.Sense.xml
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\ARM\Debug\Lumia.Internal.HMBClient.dll
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\obj\ARM\Debug\Steppy.BusinessLayer.dll
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\obj\ARM\Debug\Steppy.BusinessLayer.pdb
