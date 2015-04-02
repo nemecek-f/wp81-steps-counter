@@ -110,5 +110,10 @@ namespace Steppy.Pages.Concepts
             _trackingIsShown = false;
             TrackingControl.Visibility = System.Windows.Visibility.Collapsed;
         }
+
+        private void TrackingControl_Closed(object sender, EventArgs e)
+        {
+            HideTracking.Begin();
+        }
     }
 }

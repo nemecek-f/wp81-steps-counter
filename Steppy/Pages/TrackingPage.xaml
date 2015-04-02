@@ -24,7 +24,7 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <Grid Grid.Row="0" Style="{StaticResource PageHeader}">
-            <TextBlock Text="TRACKING" 
+            <TextBlock Text="TRACKING HISTORY" 
                        Style="{StaticResource PageHeaderText}"/>
             
         </Grid>

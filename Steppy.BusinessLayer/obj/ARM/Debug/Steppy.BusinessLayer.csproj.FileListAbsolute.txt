@@ -17,3 +17,4 @@ E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\ARM\Debug\Lu
 E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\Bin\ARM\Debug\Lumia.Internal.HMBClient.dll
 E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\obj\ARM\Debug\Steppy.BusinessLayer.dll
 E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\obj\ARM\Debug\Steppy.BusinessLayer.pdb
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.BusinessLayer\obj\ARM\Debug\Steppy.BusinessLayer.csprojResolveAssemblyReference.cache

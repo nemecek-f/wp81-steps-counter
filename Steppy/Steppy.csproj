@@ -136,6 +136,7 @@
     <Compile Include="UserControls\TrackingControl.xaml.cs">
       <DependentUpon>TrackingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AchievementsPageVm.cs" />
     <Compile Include="ViewModels\HistoryPageVm.cs" />
     <Compile Include="ViewModels\SettingsPageVm.cs" />
     <Compile Include="ViewModels\StepsDataVm.cs" />
@@ -212,8 +213,13 @@
     <Content Include="Assets\Bgs\background_1.png" />
     <Content Include="Assets\Bgs\background_3.png" />
     <Content Include="Assets\Icons\appbar.calendar.day.png" />
+    <Content Include="Assets\Icons\appbar.check.png" />
+    <Content Include="Assets\Icons\appbar.close.png" />
     <Content Include="Assets\Icons\appbar.cogs.png" />
+    <Content Include="Assets\Icons\appbar.control.play.png" />
+    <Content Include="Assets\Icons\appbar.control.stop.png" />
     <Content Include="Assets\Icons\appbar.map.treasure.png" />
+    <Content Include="Assets\Icons\appbar.progress.png" />
     <Content Include="Assets\Icons\appbar.ribbon.png" />
     <Content Include="Assets\Logo.png" />
     <Content Include="Assets\Other\steps.png" />

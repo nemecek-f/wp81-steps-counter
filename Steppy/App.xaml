@@ -25,6 +25,9 @@
         <SolidColorBrush x:Key="BrightOrange"
                          Color="#FFFF703C" />
         
+        <SolidColorBrush x:Key="LightBackground"
+                         Color="#32FFFFFF" />
+        
         <core:Double x:Key="BigFont">75</core:Double>
         <core:Double x:Key="SmallFont">22</core:Double>
         <core:Double x:Key="MediumFont">35</core:Double>

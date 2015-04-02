@@ -21,15 +21,24 @@
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
+
+        <TextBlock Text="TRACKING" FontSize="26"/>
         
-        <Grid Grid.RowSpan="4" Grid.ColumnSpan="4"
-              
-              Background="White"/>
+        <Image Source="\Assets\Icons\appbar.close.png"
+               Grid.Column="1"
+               Tap="Close_Tap"
+               Width="50"
+               HorizontalAlignment="Right"
+               />
+        
+        <Image Grid.ColumnSpan="2"
+               Grid.Row="1"
+               HorizontalAlignment="Center"
+               Width="120"
+               Source="\Assets\Icons\appbar.control.play.png"/>
 
     </Grid>
 </UserControl>

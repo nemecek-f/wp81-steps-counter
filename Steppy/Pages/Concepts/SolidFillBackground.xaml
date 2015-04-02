@@ -291,13 +291,14 @@
               ManipulationStarted="GesturesGrid_ManipulationStarted"
               ManipulationCompleted="GesturesGrid_ManipulationCompleted" />
 
-        <controls:TrackingControl Grid.Row="7"
+        <controls:TrackingControl Grid.Row="8"
                                   Opacity="0"
+                                  Closed="TrackingControl_Closed"
                                   Visibility="Collapsed"
                                   x:Name="TrackingControl"
-                                  VerticalAlignment="Bottom"
-                                 Margin="13 10 15 13"
-                                  Grid.RowSpan="2"
+                                  
+                                 Margin="13 -35 15 13"
+                                  
                                   HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5">
         	<controls:TrackingControl.RenderTransform>
         		<CompositeTransform/>

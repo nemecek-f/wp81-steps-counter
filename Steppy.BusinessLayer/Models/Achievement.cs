@@ -15,7 +15,7 @@ namespace Steppy.BusinessLayer.Models
             
         }
 
-        public Achievement(string name, string description = "")
+        public Achievement(string name, string description = "", bool isUnlocked = false)
         {
             Name = name;
             Description = description;
