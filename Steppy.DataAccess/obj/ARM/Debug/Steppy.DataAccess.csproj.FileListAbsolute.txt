@@ -1,0 +1,16 @@
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.DataAccess\bin\ARM\Debug\Steppy.DataAccess.dll
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.DataAccess\bin\ARM\Debug\Steppy.DataAccess.pdb
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.DataAccess\bin\ARM\Debug\Steppy.DataAccess.pri
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.DataAccess\obj\ARM\Debug\Steppy.DataAccess.dll
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.DataAccess\obj\ARM\Debug\Steppy.DataAccess.pdb
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.DataAccess\obj\ARM\Debug\priconfig.xml
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.DataAccess\obj\ARM\Debug\priconfig.xml.intermediate
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.DataAccess\obj\ARM\Debug\layout.resfiles
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.DataAccess\obj\ARM\Debug\layout.resfiles.intermediate
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.DataAccess\obj\ARM\Debug\resources.resfiles
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.DataAccess\obj\ARM\Debug\resources.resfiles.intermediate
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.DataAccess\obj\ARM\Debug\pri.resfiles
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.DataAccess\obj\ARM\Debug\pri.resfiles.intermediate
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.DataAccess\obj\ARM\Debug\qualifiers.txt
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.DataAccess\obj\ARM\Debug\qualifiers.txt.intermediate
+E:\SkyDrive\Workplace\Main projects\Steppy\Steppy.DataAccess\obj\ARM\Debug\MultipleQualifiersPerDimensionFound.txt

@@ -48,9 +48,9 @@ namespace Steppy.BusinessLayer.SensorCore
             }
         }
 
-        public async void ConnectToSensor()
+        public async Task ConnectToSensor()
         {
-            //await CheckIfSensorIsSupported();
+            await CheckIfSensorIsSupported();
 
             _stepCounter = await StepCounter.GetDefaultAsync();
 
@@ -83,17 +83,6 @@ namespace Steppy.BusinessLayer.SensorCore
             }
         }
 
-        public async Task<StepCounterReading> GetActualReading()
-        {
-            if (IsSensorConnected)
-            {
-                return await _stepCounter.GetCurrentReadingAsync();
-            }
-
-
-            throw new SensorNotConnectedException();
-        }
-
         public async Task<StepCount> GetTodayStats()
         {
             if (IsSensorConnected)
@@ -106,13 +95,20 @@ namespace Steppy.BusinessLayer.SensorCore
             throw new SensorNotConnectedException("Sensor not connected");
         }
 
-
-        public async Task<StepCounterReading> GetTodayStatsTwo()
+        public async Task<StepCount> GetForRange(DateTimeOffset timestamp)
         {
             if (IsSensorConnected)
             {
-                DateTimeOffset dayStart = StartOfTheDay();
-                TimeSpan untilNow = UntilNow(dayStart.Ticks);
+                return await _stepCounter.GetStepCountForRangeAsync(timestamp, DateTime.Now - timestamp);
+            }
+
+            throw new SensorNotConnectedException();
+        }
+
+        public async Task<StepCounterReading> GetAllTimeReading()
+        {
+            if (IsSensorConnected)
+            {
                 return await _stepCounter.GetCurrentReadingAsync();
             }
 

@@ -85,18 +85,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Converters\BoolToOpacityConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\ColorToBrushConverter.cs" />
     <Compile Include="Extensions\TimeSpanEx.cs" />
+    <Compile Include="Helpers\BackgroundTasksHelper.cs" />
     <Compile Include="Helpers\ColorHelper.cs" />
+    <Compile Include="Helpers\DistanceCalculator.cs" />
+    <Compile Include="Helpers\IsolatedStorageHelper.cs" />
     <Compile Include="Helpers\NavigationUriFactory.cs" />
+    <Compile Include="Helpers\TrackingManager.cs" />
     <Compile Include="Interfaces\IStepStatsProvider.cs" />
     <Compile Include="Mocks\Achievements.cs" />
     <Compile Include="Models\Achievement.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\PropertyChangedBase.cs" />
-    <Compile Include="Models\ThemeOption.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\StepsHistory.cs" />
+    <Compile Include="Models\ThemeOption.cs" />
+    <Compile Include="Models\TrackingResult.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reference\ConstantValues.cs" />
     <Compile Include="Reference\TempValues.cs" />
     <Compile Include="SensorCore\SensorCoreWrapper.cs" />

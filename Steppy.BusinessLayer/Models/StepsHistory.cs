@@ -7,7 +7,7 @@ namespace Steppy.BusinessLayer.Models
     public class StepsHistory : BaseModel
     {
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
-        public int Id { get; set; }
+        private int Id { get; set; }
 
         [Column]
         public int Steps { get; private set; }

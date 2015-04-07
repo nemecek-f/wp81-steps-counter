@@ -224,9 +224,11 @@
     <Content Include="Assets\Logo.png" />
     <Content Include="Assets\Other\steps.png" />
     <Content Include="Assets\Other\steps_inverted.png" />
+    <Content Include="Assets\play-button.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\SquareTile150x150.png" />
     <Content Include="Assets\SquareTile71x71.png" />
+    <Content Include="Assets\stop-button.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\WideLogo.png" />
     <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
@@ -244,7 +246,6 @@
     <Content Include="Assets\Tiles\IconicTileSmall.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="README_FIRST.txt" />
     <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
@@ -258,6 +259,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Steppy.Background\Steppy.Background.csproj">
+      <Project>{57f172f6-c555-4b20-a747-87c29a2fea89}</Project>
+      <Name>Steppy.Background</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Steppy.BusinessLayer\Steppy.BusinessLayer.csproj">
       <Project>{6dedf0ed-76a8-463e-b498-828a2ecfeb5f}</Project>
       <Name>Steppy.BusinessLayer</Name>

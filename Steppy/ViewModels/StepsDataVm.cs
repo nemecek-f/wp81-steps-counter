@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Steppy.BusinessLayer.Helpers;
 using Steppy.BusinessLayer.Models;
 using Steppy.BusinessLayer.Reference;
 using Steppy.BusinessLayer.SensorCore;
@@ -21,7 +22,7 @@ namespace Steppy.ViewModels
         private int _yesterdaySteps;
         private double _yesterdayDistance;
         private TimeSpan _yesterdayActiveTime;
-        private const int CentimetersInKilometer = 100000;
+        
 
         private bool _loaded;
 
@@ -51,7 +52,7 @@ namespace Steppy.ViewModels
                 var todayStats = await SensorCoreWrapper.Instance.GetTodayStats();
 
                 TodaySteps = (int)(todayStats.WalkingStepCount + todayStats.RunningStepCount);
-                TodayDistance = Math.Round((TodaySteps * TempValues.StepCentimeterLength) / CentimetersInKilometer, 2);
+                TodayDistance = DistanceCalculator.CalculateFromSteps(TodaySteps);
                 ActiveTime = todayStats.RunTime.Add(todayStats.WalkTime);
                 DailyGoalPercentage = (TodaySteps / TempValues.DailyGoal) * 100;
 
@@ -73,8 +74,7 @@ namespace Steppy.ViewModels
             {
                 var yesterdayStats = await SensorCoreWrapper.Instance.GetYesterdayStatsAsync();
                 YesterdaySteps = (int)(yesterdayStats.RunningStepCount + yesterdayStats.WalkingStepCount);
-                YesterdayDistance = Math.Round((YesterdaySteps * TempValues.StepCentimeterLength) / CentimetersInKilometer,
-                    2);
+                YesterdayDistance = DistanceCalculator.CalculateFromSteps(YesterdaySteps);
                 YesterdayActiveTimeTs = yesterdayStats.RunTime.Add(yesterdayStats.WalkTime);
 
             }
