@@ -72,7 +72,7 @@ namespace Steppy.UserControls
 
         private void TrackingButton_Tap(object sender, GestureEventArgs e)
         {
-            if (TrackingManager.Instance.TrackingActive)
+            if (TrackingManager.Instance.IsTrackingActive)
             {
                 TrackingManager.Instance.StopTracking();
             }

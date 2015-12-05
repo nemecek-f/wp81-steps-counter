@@ -39,17 +39,14 @@ namespace Steppy.ViewModels
 
         private void OnDataLoaded()
         {
-            if (DataLoaded != null)
-            {
-                DataLoaded(this, new EventArgs());
-            }
+            DataLoaded?.Invoke(this, new EventArgs());
         }
 
         public async void UpdateTodayData()
         {
             try
             {
-                var todayStats = await SensorCoreWrapper.Instance.GetTodayStats();
+                var todayStats = await SensorCoreWrapper.Instance.GetTodayStatsAsync();
 
                 TodaySteps = (int)(todayStats.WalkingStepCount + todayStats.RunningStepCount);
                 TodayDistance = DistanceCalculator.CalculateFromSteps(TodaySteps);
@@ -131,7 +128,7 @@ namespace Steppy.ViewModels
             {
                 _activeTime = value;
                 OnPropertyChanged();
-                OnPropertyChanged("TodayActiveTime");
+                OnPropertyChanged(nameof(TodayActiveTime));
             }
         }
 
@@ -141,19 +138,13 @@ namespace Steppy.ViewModels
             set
             {
                 _yesterdayActiveTime = value;
-                OnPropertyChanged("YesterdayActiveTime");
+                OnPropertyChanged(nameof(YesterdayActiveTime));
             }
         }
 
-        public string TodayActiveTime
-        {
-            get { return ActiveTime.FormatToTime(); }
-        }
+        public string TodayActiveTime => ActiveTime.FormatToTime();
 
-        public string YesterdayActiveTime
-        {
-            get { return YesterdayActiveTimeTs.FormatToTime(); }
-        }
+        public string YesterdayActiveTime => YesterdayActiveTimeTs.FormatToTime();
 
         public double DailyGoalPercentage
         {

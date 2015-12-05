@@ -10,9 +10,9 @@ namespace Steppy.BusinessLayer.StepDataProviders
 {
     public class FakeDataProvider : IStepStatsProvider
     {
-        public int StepsToday { get { return 2342; } }
+        public int StepsToday => 2342;
 
-        public IEnumerable<StepsHistory> StepsHistory { get { return history; } }
+        public IEnumerable<StepsHistory> StepsHistory => history;
 
         private static List<StepsHistory> history = new List<StepsHistory>
         {

@@ -17,26 +17,18 @@ namespace Steppy.BusinessLayer.SensorCore
 
         public event EventHandler SensorConnected;
 
-        private static readonly SensorCoreWrapper _instance = new SensorCoreWrapper();
-
-        public static SensorCoreWrapper Instance
-        {
-            get { return _instance; }
-        }
+        public static SensorCoreWrapper Instance { get; } = new SensorCoreWrapper();
 
         private void OnSensorConnected()
         {
-            if (SensorConnected != null)
-            {
-                SensorConnected(this, new EventArgs());
-            }
+            SensorConnected?.Invoke(this, new EventArgs());
         }
 
         private SensorCoreWrapper()
         {
             try
             {
-                ConnectToSensor();
+                ConnectToSensorAsync();
             }
             catch (SensorNotSupportedException ex)
             {
@@ -44,13 +36,13 @@ namespace Steppy.BusinessLayer.SensorCore
             }
             catch (SensorNotConnectedException ex)
             {
-                MessageBox.Show("Cannot connect to sensor");
+                MessageBox.Show("Cannot connect to sensor. Error: " + ex.Message);
             }
         }
 
-        public async Task ConnectToSensor()
+        public async Task ConnectToSensorAsync()
         {
-            await CheckIfSensorIsSupported();
+            await CheckIfSensorIsSupportedAsync();
 
             _stepCounter = await StepCounter.GetDefaultAsync();
 
@@ -59,9 +51,9 @@ namespace Steppy.BusinessLayer.SensorCore
             OnSensorConnected();
         }
 
-        public async Task ReconnectSensor()
+        public async Task ReconnectSensorAsync()
         {
-            await CheckIfSensorIsSupported();
+            await CheckIfSensorIsSupportedAsync();
 
             _stepCounter = null;
 
@@ -70,12 +62,12 @@ namespace Steppy.BusinessLayer.SensorCore
             OnSensorConnected();
         }
 
-        public async Task DisconnectSensor()
+        public async Task DisconnectSensorAsync()
         {
             await _stepCounter.DeactivateAsync();
         }
 
-        private async Task CheckIfSensorIsSupported()
+        private async Task CheckIfSensorIsSupportedAsync()
         {
             if (!await StepCounter.IsSupportedAsync())
             {
@@ -83,7 +75,7 @@ namespace Steppy.BusinessLayer.SensorCore
             }
         }
 
-        public async Task<StepCount> GetTodayStats()
+        public async Task<StepCount> GetTodayStatsAsync()
         {
             if (IsSensorConnected)
             {
@@ -95,7 +87,7 @@ namespace Steppy.BusinessLayer.SensorCore
             throw new SensorNotConnectedException("Sensor not connected");
         }
 
-        public async Task<StepCount> GetForRange(DateTimeOffset timestamp)
+        public async Task<StepCount> GetForRangeAsync(DateTimeOffset timestamp)
         {
             if (IsSensorConnected)
             {
@@ -105,7 +97,7 @@ namespace Steppy.BusinessLayer.SensorCore
             throw new SensorNotConnectedException();
         }
 
-        public async Task<StepCounterReading> GetAllTimeReading()
+        public async Task<StepCounterReading> GetAllTimeReadingAsync()
         {
             if (IsSensorConnected)
             {
@@ -142,22 +134,22 @@ namespace Steppy.BusinessLayer.SensorCore
         }
                 
 
-        public async Task<List<StepsHistory>> GetStepsHistory()
+        public async Task<List<StepsHistory>> GetStepsHistoryAsync()
         {
-            var list = new List<StepsHistory>(31);
+            var stepsHistory = new List<StepsHistory>(31);
 
             if (IsSensorConnected)
             {
                 var lastThirtyDays = await _stepCounter.GetStepCountHistoryAsync(DateTimeOffset.Now.AddDays(-31), TimeSpan.FromDays(30));
 
-                list.AddRange(from dayHistory in lastThirtyDays
+                stepsHistory.AddRange(from dayHistory in lastThirtyDays
                     select
                         new StepsHistory((int)dayHistory.WalkingStepCount, (int)dayHistory.RunningStepCount, new DateTime(dayHistory.Timestamp.Ticks), dayHistory.RunTime.Minutes + dayHistory.WalkTime.Minutes));
 
 
             }
 
-            return list;
+            return stepsHistory;
         }
     }
 }

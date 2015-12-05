@@ -25,7 +25,7 @@ namespace Steppy.Background
 
                 var history = days.Select(FormatStepReading);
 
-                await WriteIntoFile(history);
+                await WriteIntoFileAsync(history);
             }
             catch
             {
@@ -38,11 +38,11 @@ namespace Steppy.Background
 
         private string FormatStepReading(StepCounterReading reading)
         {
-            return String.Format("{0};{1};{2};{3};{4}", reading.Timestamp.Ticks, reading.WalkingStepCount,
-                reading.WalkTime, reading.RunningStepCount, reading.RunTime);
+            return
+                $"{reading.Timestamp.Ticks};{reading.WalkingStepCount};{reading.WalkTime};{reading.RunningStepCount};{reading.RunTime}";
         }
 
-        private async Task WriteIntoFile(IEnumerable<string> lines)
+        private async Task WriteIntoFileAsync(IEnumerable<string> lines)
         {
             StorageFolder local = ApplicationData.Current.LocalFolder;
 

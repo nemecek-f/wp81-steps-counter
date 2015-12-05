@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Steppy.BusinessLayer.Reference;
 
+using static System.Math;
+
 namespace Steppy.BusinessLayer.Helpers
 {
     public static class DistanceCalculator
@@ -13,7 +15,7 @@ namespace Steppy.BusinessLayer.Helpers
 
         public static double CalculateFromSteps(int steps, double stepLength = TempValues.StepCentimeterLength)
         {
-            return Math.Round((steps * stepLength) / CentimetersInKilometer, 2);
+            return Round((steps * stepLength) / CentimetersInKilometer, 2);
         }
     }
 }

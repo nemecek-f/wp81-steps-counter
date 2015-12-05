@@ -10,17 +10,11 @@ namespace Steppy.ViewModels
 {
     public class SettingsPageVm : PropertyChangedBase
     {
-        private List<ThemeOption> _themes;
-
         public SettingsPageVm()
         {
-            _themes = ColorHelper.GetFlatThemes();
+            ThemeOptions = ColorHelper.GetFlatThemes();
         }
 
-        public List<ThemeOption> ThemeOptions
-        {
-            get { return _themes; }
-        }
-
+        public List<ThemeOption> ThemeOptions { get; }
     }
 }

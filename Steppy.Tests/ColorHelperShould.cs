@@ -11,10 +11,10 @@ using Steppy.BusinessLayer.Helpers;
 namespace Steppy.Tests
 {
     [TestFixture]
-    public class ColorHelperTest
+    public class ColorHelperShould
     {
         [Test]
-        public void ShouldConvertHexToColor()
+        public void ConvertHexToColor()
         {
             
 

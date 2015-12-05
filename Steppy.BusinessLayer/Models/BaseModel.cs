@@ -14,10 +14,7 @@ namespace Steppy.BusinessLayer.Models
         
         protected void OnPropertyChanging([CallerMemberName] string propertyName = null)
         {
-            if (PropertyChanging != null)
-            {
-                PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
-            }
+            PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
         }
     }
 }
